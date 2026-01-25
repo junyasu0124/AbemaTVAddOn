@@ -1,0 +1,93 @@
+body {
+  width: max-content;
+  margin: 8px 12px;
+}
+
+.tab {
+  margin: 0;
+  font-size: 18px;
+
+  &.active {
+    font-weight: bold;
+  }
+}
+
+.panel {
+  display: none;
+  margin-top: 8px;
+
+  &.active {
+    display: block;
+  }
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: flex;
+  margin-bottom: 4px;
+  gap: 2px;
+}
+
+.input {
+  width: 60px;
+  height: 20px;
+  padding: 0 4px;
+  flex: 1;
+
+  &.invalid {
+    outline: 1px auto red;
+  }
+}
+
+.regexToggle {
+  width: 24px;
+
+  .regex & {
+    background-color: lightgray;
+  }
+}
+
+.deleteButton {
+  display: grid;
+  width: 24px;
+  padding: 1px;
+  align-content: center;
+  justify-content: center;
+
+  &>span {
+    display: block;
+    width: 1px;
+    height: 16px;
+    grid-area: 1/1;
+    background-color: black;
+    transform: rotate(45deg);
+    transform-origin: center;
+
+    &:last-child {
+      transform: rotate(-45deg);
+    }
+  }
+
+  &:disabled>span {
+    background-color: rgba(16, 16, 16, 0.3);
+    pointer-events: none;
+  }
+}
+
+#suggestReload {
+  margin: 4px 0 0 0;
+}
+
+#displayHiddenMessageLabel {
+  line-height: 12px;
+}
+
+#displayHiddenMessage {
+  margin: 6px 3px 0 0;
+  vertical-align: bottom;
+}
