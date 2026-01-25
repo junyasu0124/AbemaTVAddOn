@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="popup.css">
+</head>
+
+<body>
+  <header>
+    <nav id="tabs">
+      <button class="tab" data-tab="rate">速度</button>
+      <button class="tab" data-tab="ngWord">NGワード</button>
+    </nav>
+  </header>
+
+  <main>
+    <section id="rate" class="panel">
+      <template id="rateTemplate">
+        <li class="item">
+          <input type="number" class="input" step="0.1" min="0.1" max="10">
+          <button class="deleteButton" title="削除">
+            <span></span>
+            <span></span>
+          </button>
+        </li>
+      </template>
+
+      <ul id="rateList" class="list"></ul>
+      <button id="addRateButton">追加</button>
+      <button id="resetRateList">リセット</button>
+
+      <p id="suggestReload">ページをの再読み込みで<br>変更が適用されます</p>
+    </section>
+
+    <section id="ngWord" class="panel">
+      <template id="ngWordTemplate">
+        <li class="item">
+          <input type="text" class="input">
+          <button class="regexToggle" title="正規表現">.*</button>
+          <button class="deleteButton" title="削除">
+            <span></span>
+            <span></span>
+          </button>
+        </li>
+      </template>
+
+      <ul id="ngWordList" class="list"></ul>
+      <button id="addNgWord">追加</button>
+      <button id="saveNgWordList" disabled>保存</button>
+      <br>
+      <label id="displayHiddenMessageLabel">
+        <input type="checkbox" id="displayHiddenMessage">コメント非表示時に<br>「NGワードが含まれています」と表示</label>
+    </section>
+  </main>
+
+  <script src="popup.js"></script>
+</body>
+
+</html>
