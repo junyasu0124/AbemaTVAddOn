@@ -125,7 +125,8 @@ function setBrowserFullscreenButton() {
           isPointerInHeaderOrSideNavigation = false;
         });
 
-        document.querySelector('.com-vod-VODScreen-video-cover').addEventListener('pointermove', () => {
+        const containerViewScreen = document.querySelector('.c-tv-TimeshiftPlayerContainerView-screen') ?? document.querySelector('.c-vod-EpisodePlayerContainer-screen');
+        containerViewScreen.addEventListener('pointermove', () => {
           if (containerView.style.position === 'fixed' && (miniPlayerWrapper.classList.contains('com-vod-VODMiniPlayerWrapper__player--bg') === false || miniPlayerWrapper.classList.contains('com-vod-VODMiniPlayerWrapper__player--bg-mini') === false)) {
             clearTimeout(pointerMoveTimeoutId);
             header.classList.remove('c-common-HeaderContainer-header--hidden');
@@ -138,7 +139,7 @@ function setBrowserFullscreenButton() {
             }, 4000);
           }
         });
-        document.querySelector('.com-vod-VODScreen-video-cover').addEventListener('pointerleave', () => {
+        containerViewScreen.addEventListener('pointerleave', () => {
           setTimeout(() => {
             if (containerView.style.position === 'fixed' && isPointerInHeaderOrSideNavigation === false && (miniPlayerWrapper.classList.contains('com-vod-VODMiniPlayerWrapper__player--bg') === false || miniPlayerWrapper.classList.contains('com-vod-VODMiniPlayerWrapper__player--bg-mini') === false)) {
               clearTimeout(pointerMoveTimeoutId);
