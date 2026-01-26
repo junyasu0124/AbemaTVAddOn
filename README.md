@@ -10,7 +10,7 @@ Chrome用拡張機能です。AbemaTVに便利な機能を追加します
 ## インストール方法
 1. 「Download ZIP」でレポジトリ内のファイルをPCに保存
 1. ZIPを展開
-1. Chromeで「chrome://extensions/」に移動
+1. Chromeで「[chrome://extensions/](chrome://extensions/)」に移動
 1. 右上の「デベロッパーモード」を有効にする
 1. 「パッケージ化されていない拡張機能を読み込む」をクリック
 1. 2で展開されたフォルダーを選択
