@@ -187,6 +187,8 @@ function setBrowserFullscreenButton() {
                 if (document.querySelector('.com-vod-BrowserFullscreen') === null) {
                   rightControlBar = document.querySelector('.com-vod-VideoControlBar__right');
                   rightControlBarObserver?.disconnect();
+                  if (rightControlBar === null)
+                    return;
                   rightControlBarObserver = setRightControlBarObserver(rightControlBar);
                   fullscreenButton = getFullscreenButton();
                   if (fullscreenButton)
@@ -386,7 +388,6 @@ function setNGCommentsRemoval() {
               onReachTop = null;
               onReachTopObserver.disconnect();
               onReachTopObserver = null;
-              console.log('OnReachTop removed');
             }
           });
         }
