@@ -18,6 +18,11 @@ function getNgWords() {
   });
 }
 
+const comments = [];
+window.addEventListener('new-comment', (event) => {
+  comments.push(event.detail);
+});
+
 chrome.storage.local.get('playbackRates', data => {
   const rates = data.playbackRates || [1.0, 1.3, 1.5, 1.7, 2.0];
 
@@ -346,11 +351,13 @@ function setNGCommentsRemoval() {
             if (target !== null) {
               list = target;
               removeNgWords(list.children, await getNgWords());
+              setUserIdToComments(list.children);
               listObserver = new MutationObserver((mutationsList) => {
                 for (const mutation of mutationsList) {
                   mutation.addedNodes.forEach(async (addedNode) => {
                     const comment = addedNode.children[0]?.children[0]?.children[0]?.textContent;
                     setNgWordStyle(addedNode, isContainsNgWord(comment, await getNgWords()));
+                    setUserIdStyle(addedNode, getUserId(comment));
                   });
                 }
               });
@@ -372,11 +379,13 @@ function setNGCommentsRemoval() {
             if (node.classList.contains('com-a-OnReachTop')) {
               onReachTop = node;
               removeNgWords(onReachTop.children[0].children, await getNgWords());
+              setUserIdToComments(onReachTop.children[0].children);
               onReachTopObserver = new MutationObserver((mutationsList) => {
                 for (const mutation of mutationsList) {
                   mutation.addedNodes.forEach(async (addedNode) => {
                     const comment = addedNode.children[0]?.children[0]?.children[0]?.textContent;
                     setNgWordStyle(addedNode, isContainsNgWord(comment, await getNgWords()));
+                    setUserIdStyle(addedNode, getUserId(comment));
                   });
                 }
               });
@@ -448,4 +457,23 @@ function isContainsNgWord(comment, ngWords) {
         return false;
       }
     });
+}
+function setUserIdToComments(children) {
+  for (const child of children) {
+    const comment = child.children[0]?.children[0]?.children[0]?.textContent;
+    setUserIdStyle(child, getUserId(comment));
+  }
+}
+function setUserIdStyle(child, userId) {
+  if (userId !== null)
+    child.title = userId;
+}
+function getUserId(comment) {
+  const index = comments.findIndex(e => e.message === comment);
+  if (index !== -1) {
+    const userId = comments[index].userId;
+    comments.splice(index, 1);
+    return userId;
+  }
+  return null;
 }
