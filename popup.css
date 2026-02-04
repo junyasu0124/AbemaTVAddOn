@@ -83,11 +83,28 @@ body {
   margin: 4px 0 0 0;
 }
 
-#displayHiddenMessageLabel {
-  line-height: 12px;
+#hiddenMessageOptions {
+  display: grid;
+  gap: 4px;
+  margin-top: 4px;
 }
 
-#displayHiddenMessage {
-  margin: 6px 3px 0 0;
-  vertical-align: bottom;
+.hiddenMessageOption {
+  display: flex;
+  gap: 6px;
+  line-height: 1.2;
+}
+
+.hiddenMessageOption input {
+  margin: 2px 0 0 0;
+}
+
+.userIdSettingOptions {
+  display: flex;
+  gap: 6px;
+  line-height: 1.2;
+}
+
+.userIdSettingOptions input {
+  margin: 2px 0 0 0;
 }

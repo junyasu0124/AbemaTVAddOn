@@ -20,7 +20,8 @@ const ngWordList = document.getElementById('ngWordList');
 const ngWordTemplate = document.getElementById('ngWordTemplate');
 const addNgWordButton = document.getElementById('addNgWord');
 const saveNgWordListButton = document.getElementById('saveNgWordList');
-const displayHiddenMessageCheckbox = document.getElementById('displayHiddenMessage');
+const hiddenMessageModeRadios = document.querySelectorAll('input[name="hiddenMessageMode"]');
+const userIdInlineDisplayCheckbox = document.getElementById('userIdInlineDisplay');
 
 function createNgWordItem(value = '', isRegex = false) {
   const clone = ngWordTemplate.content.cloneNode(true);
@@ -77,7 +78,10 @@ function loadNgWords() {
         const ngWordItem = createNgWordItem(word, true);
         ngWordList.appendChild(ngWordItem);
       });
-      displayHiddenMessageCheckbox.checked = data.ngWords.displayHiddenMessage ?? false;
+      const mode = data.ngWords.hiddenMessageMode ?? 'hide';
+      hiddenMessageModeRadios.forEach(radio => {
+        radio.checked = radio.value === mode;
+      });
     }
   });
 }
@@ -95,7 +99,8 @@ function saveNgWords() {
         ngWords.text.push(input.value);
     }
   });
-  ngWords.displayHiddenMessage = displayHiddenMessageCheckbox.checked;
+  const selectedMode = Array.from(hiddenMessageModeRadios).find(radio => radio.checked);
+  ngWords.hiddenMessageMode = selectedMode ? selectedMode.value : 'hide';
   chrome.storage.local.set({ ngWords: ngWords });
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     chrome.tabs.sendMessage(tabs[0].id, 'NG_WORDS_UPDATED');
@@ -112,18 +117,32 @@ addNgWordButton.addEventListener('click', () => {
 saveNgWordListButton.addEventListener('click', () => {
   saveNgWords();
 });
-displayHiddenMessageCheckbox.addEventListener('change', () => {
-  chrome.storage.local.get('ngWords', data => {
-    if (data.ngWords === undefined) data.ngWords = { text: [], regex: [] };
-    data.ngWords.displayHiddenMessage = displayHiddenMessageCheckbox.checked;
-    chrome.storage.local.set({ ngWords: data.ngWords });
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      chrome.tabs.sendMessage(tabs[0].id, 'NG_WORDS_UPDATED');
+hiddenMessageModeRadios.forEach(radio => {
+  radio.addEventListener('change', () => {
+    const selectedMode = Array.from(hiddenMessageModeRadios).find(item => item.checked);
+    chrome.storage.local.get('ngWords', data => {
+      if (data.ngWords === undefined)
+        data.ngWords = { text: [], regex: [] };
+      data.ngWords.hiddenMessageMode = selectedMode ? selectedMode.value : 'hide';
+      chrome.storage.local.set({ ngWords: data.ngWords });
+      chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        chrome.tabs.sendMessage(tabs[0].id, 'NG_WORDS_UPDATED');
+      });
     });
   });
 });
 
 loadNgWords();
+
+chrome.storage.local.get('userIdInlineDisplay', data => {
+  userIdInlineDisplayCheckbox.checked = data.userIdInlineDisplay ?? false;
+});
+userIdInlineDisplayCheckbox.addEventListener('change', () => {
+  chrome.storage.local.set({ userIdInlineDisplay: userIdInlineDisplayCheckbox.checked });
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    chrome.tabs.sendMessage(tabs[0].id, 'USER_ID_INLINE_DISPLAY_CHANGED');
+  });
+});
 
 const rateList = document.getElementById('rateList');
 const rateTemplate = document.getElementById('rateTemplate');

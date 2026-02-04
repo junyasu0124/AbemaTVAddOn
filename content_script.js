@@ -1,4 +1,11 @@
 let ngWordsCache;
+function setHiddenMessageMode(mode) {
+  const normalizedMode = mode ?? 'hide';
+  document.documentElement.setAttribute('data-ng-word-hidden-mode', normalizedMode);
+}
+function getHiddenMessageMode(ngWords) {
+  return ngWords?.hiddenMessageMode ?? 'hide';
+}
 function getNgWords() {
   return new Promise((resolve) => {
     if (ngWordsCache !== undefined) {
@@ -6,12 +13,8 @@ function getNgWords() {
     } else {
       chrome.storage.local.get('ngWords', data => {
         ngWordsCache = data.ngWords;
-        if (ngWordsCache !== undefined) {
-          if (ngWordsCache.displayHiddenMessage === true)
-            document.documentElement.setAttribute('data-ng-word-hidden-message', '');
-          else
-            document.documentElement.removeAttribute('data-ng-word-hidden-message');
-        }
+        if (ngWordsCache !== undefined)
+          setHiddenMessageMode(getHiddenMessageMode(ngWordsCache));
         resolve(ngWordsCache);
       });
     }
@@ -42,6 +45,9 @@ chrome.runtime.onMessage.addListener((message) => {
       break;
     case 'NG_WORDS_UPDATED':
       ngWordsUpdated();
+      break;
+    case 'USER_ID_INLINE_DISPLAY_CHANGED':
+      userIdInlineDisplayChanged();
       break;
   }
 });
@@ -318,12 +324,12 @@ function setNGCommentsRemoval() {
       .com-a-Text--ng-word {
         color: gray !important;
       }
-      :root[data-ng-word-hidden-message] {
+      :root[data-ng-word-hidden-mode="replace"] {
         .com-tv-CommentBlock>.com-tv-CommentBlock__inner>.com-tv-CommentBlock__message:has(>.com-a-Text--ng-word)>span:first-child, .com-archive-comment-ArchiveCommentItem>.com-archive-comment-ArchiveCommentItem__message:has(>.com-a-Text--ng-word)>span:first-child {
           display: none;
         }
       }
-      :root:not([data-ng-word-hidden-message]) {
+      :root[data-ng-word-hidden-mode="hide"] {
         .com-tv-CommentBlock--ng-word, .com-archive-comment-ArchiveCommentItem--ng-word {
           display: none;
         }
@@ -331,9 +337,36 @@ function setNGCommentsRemoval() {
           display: none;
         }
       }
+      :root[data-ng-word-hidden-mode="mask"] {
+        .com-tv-CommentBlock>.com-tv-CommentBlock__inner>.com-tv-CommentBlock__message>.com-a-Text--ng-word, .com-archive-comment-ArchiveCommentItem>.com-archive-comment-ArchiveCommentItem__message>.com-a-Text--ng-word {
+          display: none;
+        }
+      }
+
+      :root[data-user-id-inline-display] {
+        .com-tv-CommentBlock>.com-tv-CommentBlock__inner, .com-archive-comment-ArchiveCommentItem {
+          padding: 4px 12px !important;
+        }
+        .com-tv-CommentBlock>.com-tv-CommentBlock__inner>.com-tv-CommentBlock__message>.com-a-Text--user-id, .com-archive-comment-ArchiveCommentItem>.com-archive-comment-ArchiveCommentItem__message>.com-a-Text--user-id {
+          display: block;
+          font-size: 11px;
+          color: gray;
+        }
+      }
+      :root:not([data-user-id-inline-display]) {
+        .com-tv-CommentBlock>.com-tv-CommentBlock__inner>.com-tv-CommentBlock__message>.com-a-Text--user-id, .com-archive-comment-ArchiveCommentItem>.com-archive-comment-ArchiveCommentItem__message>.com-a-Text--user-id {
+          display: none;
+        }
+      }
     </style>
     `);
   }
+  chrome.storage.local.get('userIdInlineDisplay', data => {
+    if (data.userIdInlineDisplay === true)
+      document.documentElement.setAttribute('data-user-id-inline-display', '');
+    else
+      document.documentElement.removeAttribute('data-user-id-inline-display', '');
+  });
   const id = setInterval(() => {
     const episodeContainerView = document.querySelector('.c-vod-EpisodePlayerContainer-wrapper');
     if (episodeContainerView !== null) {
@@ -350,13 +383,15 @@ function setNGCommentsRemoval() {
             const target = node.querySelector('.com-tv-CommentArea>.com-a-OnReachTop>div');
             if (target !== null) {
               list = target;
-              removeNgWords(list.children, await getNgWords());
+              const ngWords = await getNgWords();
+              removeNgWords(list.children, ngWords);
               setUserIdToComments(list.children);
               listObserver = new MutationObserver((mutationsList) => {
                 for (const mutation of mutationsList) {
                   mutation.addedNodes.forEach(async (addedNode) => {
                     const comment = addedNode.children[0]?.children[0]?.children[0]?.textContent;
-                    setNgWordStyle(addedNode, isContainsNgWord(comment, await getNgWords()));
+                    const ngWords = await getNgWords();
+                    setNgWordStyle(addedNode, isContainsNgWord(comment, ngWords), ngWords);
                     setUserIdStyle(addedNode, getUserId(comment));
                   });
                 }
@@ -378,13 +413,15 @@ function setNGCommentsRemoval() {
           mutation.addedNodes.forEach(async (node) => {
             if (node.classList.contains('com-a-OnReachTop')) {
               onReachTop = node;
-              removeNgWords(onReachTop.children[0].children, await getNgWords());
+              const ngWords = await getNgWords();
+              removeNgWords(onReachTop.children[0].children, ngWords);
               setUserIdToComments(onReachTop.children[0].children);
               onReachTopObserver = new MutationObserver((mutationsList) => {
                 for (const mutation of mutationsList) {
                   mutation.addedNodes.forEach(async (addedNode) => {
                     const comment = addedNode.children[0]?.children[0]?.children[0]?.textContent;
-                    setNgWordStyle(addedNode, isContainsNgWord(comment, await getNgWords()));
+                    const ngWords = await getNgWords();
+                    setNgWordStyle(addedNode, isContainsNgWord(comment, ngWords), ngWords);
                     setUserIdStyle(addedNode, getUserId(comment));
                   });
                 }
@@ -409,10 +446,7 @@ function ngWordsUpdated() {
   chrome.storage.local.get('ngWords', data => {
     const ngWords = ngWordsCache = data.ngWords;
     if (ngWords !== undefined) {
-      if (ngWords.displayHiddenMessage === true)
-        document.documentElement.setAttribute('data-ng-word-hidden-message', '');
-      else
-        document.documentElement.removeAttribute('data-ng-word-hidden-message');
+      setHiddenMessageMode(getHiddenMessageMode(ngWords));
       if (ngWords.text !== undefined && ngWords.regex !== undefined) {
         const list = document.querySelector('.com-tv-CommentArea>.com-a-OnReachTop>div') ?? document.querySelector('.c-archive-comment-ArchiveCommentContainerView__list-wrapper>.com-a-OnReachTop>ul');
         if (list !== null)
@@ -421,13 +455,50 @@ function ngWordsUpdated() {
     }
   });
 }
+function userIdInlineDisplayChanged() {
+  chrome.storage.local.get('userIdInlineDisplay', data => {
+    let needToScroll = false, scrollContainer;
+    const list = document.querySelector('.com-tv-CommentArea>.com-a-OnReachTop>div') ?? document.querySelector('.c-archive-comment-ArchiveCommentContainerView__list-wrapper>.com-a-OnReachTop>ul');
+    if (list !== null) {
+      const children = list.querySelectorAll('.com-tv-CommentBlock, .com-archive-comment-ArchiveCommentItem');
+      scrollContainer = list.parentElement;
+      if (children.length > 0) {
+        if (data.userIdInlineDisplay === true && scrollContainer.scrollHeight - scrollContainer.scrollTop <= scrollContainer.clientHeight + children[0].clientHeight)
+          needToScroll = true;
+        const isArchive = children[0].classList.contains('com-archive-comment-ArchiveCommentItem');
+        children.forEach((child) => {
+          const messageContainer = child.querySelector('.com-tv-CommentBlock__message') || child.querySelector('.com-archive-comment-ArchiveCommentItem__message');
+          if (isArchive)
+            child = child.parentElement;
+          const userId = child.getAttribute('title') || messageContainer.querySelector('.com-a-Text--user-id')?.textContent || null;
+          if (data.userIdInlineDisplay === true) {
+            child.removeAttribute('title');
+          } else {
+            child.title = userId;
+          }
+        });
+      }
+    }
+    if (data.userIdInlineDisplay === true)
+      document.documentElement.setAttribute('data-user-id-inline-display', '');
+    else
+      document.documentElement.removeAttribute('data-user-id-inline-display', '');
+    if (needToScroll) {
+      requestAnimationFrame(() =>
+        scrollContainer.scrollTop = scrollContainer.scrollHeight
+      );
+    }
+  });
+}
 function removeNgWords(children, ngWords) {
   for (const child of children) {
-    const comment = child.children[0]?.children[0]?.children[0]?.textContent;
-    setNgWordStyle(child, isContainsNgWord(comment, ngWords));
+    const commentElement = child.children[0]?.children[0]?.children[0];
+    const comment = commentElement?.dataset.originalText ?? commentElement?.textContent;
+    setNgWordStyle(child, isContainsNgWord(comment, ngWords), ngWords);
   }
 }
-function setNgWordStyle(child, isContainsNgWord) {
+function setNgWordStyle(child, isContainsNgWord, ngWords) {
+  const mode = getHiddenMessageMode(ngWords);
   if (isContainsNgWord) {
     if (child.classList.contains('com-tv-CommentBlock'))
       child.classList.add('com-tv-CommentBlock--ng-word');
@@ -439,13 +510,54 @@ function setNgWordStyle(child, isContainsNgWord) {
     const messageContainer = child.querySelector('.com-tv-CommentBlock__message') || child.querySelector('.com-archive-comment-ArchiveCommentItem__message');
     if (messageContainer && messageContainer.querySelector('.com-a-Text--ng-word') === null)
       messageContainer.appendChild(hiddenMessage);
+    const commentTextElement = getCommentTextElement(messageContainer);
+    if (commentTextElement) {
+      if (mode === 'mask') {
+        if (!commentTextElement.dataset.originalText)
+          commentTextElement.dataset.originalText = commentTextElement.textContent;
+        commentTextElement.textContent = maskCommentText(commentTextElement.dataset.originalText, ngWords);
+      } else if (commentTextElement.dataset.originalText) {
+        commentTextElement.textContent = commentTextElement.dataset.originalText;
+        delete commentTextElement.dataset.originalText;
+      }
+    }
   } else {
     child.classList.remove('com-tv-CommentBlock--ng-word');
     child.classList.remove('com-archive-comment-ArchiveCommentItem--ng-word');
     const hiddenMessage = child.querySelector('.com-a-Text--ng-word');
     if (hiddenMessage)
       hiddenMessage.remove();
+    const messageContainer = child.querySelector('.com-tv-CommentBlock__message') || child.querySelector('.com-archive-comment-ArchiveCommentItem__message');
+    const commentTextElement = getCommentTextElement(messageContainer);
+    if (commentTextElement?.dataset.originalText) {
+      commentTextElement.textContent = commentTextElement.dataset.originalText;
+      delete commentTextElement.dataset.originalText;
+    }
   }
+}
+function getCommentTextElement(messageContainer) {
+  if (!messageContainer)
+    return null;
+  return Array.from(messageContainer.children).find((element) => {
+    return !element.classList.contains('com-a-Text--ng-word') && !element.classList.contains('com-a-Text--user-id');
+  }) ?? null;
+}
+function maskCommentText(text, ngWords) {
+  let masked = text;
+  ngWords.text.forEach(target => {
+    if (target === '')
+      return;
+    masked = masked.split(target).join('●'.repeat(target.length));
+  });
+  ngWords.regex.forEach(pattern => {
+    try {
+      const regex = new RegExp(pattern, 'gv');
+      masked = masked.replace(regex, match => '●'.repeat(match.length));
+    } catch {
+      return;
+    }
+  });
+  return masked;
 }
 function isContainsNgWord(comment, ngWords) {
   return ngWords.text.some(target => comment.includes(target)) ||
@@ -465,8 +577,32 @@ function setUserIdToComments(children) {
   }
 }
 function setUserIdStyle(child, userId) {
-  if (userId !== null)
+  if (userId !== null) {
+    if (document.documentElement.hasAttribute('data-user-id-inline-display')) {
+      child.removeAttribute('title');
+    } else {
     child.title = userId;
+}
+    const userIdSpan = document.createElement('span');
+    userIdSpan.className = 'com-a-Text--user-id';
+    userIdSpan.textContent = userId;
+    const messageContainer = child.querySelector('.com-tv-CommentBlock__message') || child.querySelector('.com-archive-comment-ArchiveCommentItem__message');
+    if (messageContainer) {
+      const existingUserIdSpan = messageContainer.querySelector('.com-a-Text--user-id');
+      let needToScroll = false;
+      const scrollContainer = child.parentElement.parentElement;
+      if (document.documentElement.hasAttribute('data-user-id-inline-display') && scrollContainer.scrollHeight - scrollContainer.scrollTop <= scrollContainer.clientHeight + child.clientHeight)
+        needToScroll = true;
+      if (existingUserIdSpan !== null)
+        existingUserIdSpan.remove();
+      messageContainer.appendChild(userIdSpan);
+      if (needToScroll) {
+        requestAnimationFrame(() =>
+          scrollContainer.scrollTop = scrollContainer.scrollHeight
+        );
+      }
+    }
+  }
 }
 function getUserId(comment) {
   const index = comments.findIndex(e => e.message === comment);
