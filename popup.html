@@ -11,6 +11,7 @@
     <nav id="tabs">
       <button class="tab" data-tab="rate">速度</button>
       <button class="tab" data-tab="ngWord">NGワード</button>
+      <button class="tab" data-tab="userId">ユーザーID</button>
     </nav>
   </header>
 
@@ -49,8 +50,19 @@
       <button id="addNgWord">追加</button>
       <button id="saveNgWordList" disabled>保存</button>
       <br>
-      <label id="displayHiddenMessageLabel">
-        <input type="checkbox" id="displayHiddenMessage">コメント非表示時に<br>「NGワードが含まれています」と表示</label>
+      <div id="hiddenMessageOptions">
+        <label class="hiddenMessageOption">
+          <input type="radio" name="hiddenMessageMode" value="hide" checked>コメントを非表示にする</label>
+        <label class="hiddenMessageOption">
+          <input type="radio" name="hiddenMessageMode" value="replace">元のコメントの代わりに「NGワードが<br>含まれています」と表示</label>
+        <label class="hiddenMessageOption">
+          <input type="radio" name="hiddenMessageMode" value="mask">NGワード部分を伏字にする</label>
+      </div>
+    </section>
+
+    <section id="userId" class="panel">
+      <label class="userIdSettingOptions">
+        <input type="checkbox" id="userIdInlineDisplay">ユーザーIDをコメント内に表示する</label>
     </section>
   </main>
 
