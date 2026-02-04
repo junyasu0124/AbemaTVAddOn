@@ -509,7 +509,7 @@ function setNgWordStyle(child, isContainsNgWord, ngWords) {
     hiddenMessage.textContent = 'NGワードが含まれています';
     const messageContainer = child.querySelector('.com-tv-CommentBlock__message') || child.querySelector('.com-archive-comment-ArchiveCommentItem__message');
     if (messageContainer && messageContainer.querySelector('.com-a-Text--ng-word') === null)
-      messageContainer.appendChild(hiddenMessage);
+      messageContainer.firstChild.after(hiddenMessage);
     const commentTextElement = getCommentTextElement(messageContainer);
     if (commentTextElement) {
       if (mode === 'mask') {
