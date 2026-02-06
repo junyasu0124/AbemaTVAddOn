@@ -1,973 +1,1044 @@
 (() => {
-  const rateFunction = (e, t, n) => {
-    n.d(t, {
-      e: () => y
+  const rateFunction = (e, n, i) => {
+    i.d(n, {
+      e: () => A
     });
-    var o = n(73459)
-      , i = n(30395)
-      , a = n.n(i)
-      , r = n(22155);
-    function l() {
-      return l = Object.assign ? Object.assign.bind() : function (e) {
-        for (var t = 1; t < arguments.length; t++) {
-          var n = arguments[t];
-          for (var o in n)
-            ({}).hasOwnProperty.call(n, o) && (e[o] = n[o])
-        }
-        return e
+    var t, o = i(57837), a = i(65723), r = i(87716), s = i(77371), l = i(77903), d = i(58694), c = i(30395), u = i.n(c), _ = i(22155), m = function (e) {
+      var n = e.target;
+      if ((0,
+        r._)(n, HTMLButtonElement)) {
+        var i = n.previousSibling;
+        (0,
+          r._)(i, HTMLInputElement) && i.click()
       }
-        ,
-        l.apply(null, arguments)
-    }
-    const s = e => {
-      const t = e.target;
-      if (t instanceof HTMLButtonElement) {
-        const e = t.previousSibling;
-        e instanceof HTMLInputElement && e.click()
-      }
-    }
-      , c = ({ id: e, className: t, label: n = "", ...i }) => r.createElement("div", {
-        className: a()(t, "com-a-RadioButton", {
-          "com-a-RadioButton--checked": i.checked
-        })
-      }, r.createElement("input", l({
-        type: "radio",
-        id: e,
-        className: "com-a-RadioButton__radio"
-      }, i)), r.createElement("button", {
-        tabIndex: -1,
-        className: "com-a-RadioButton__button",
-        onClick: s
-      }, r.createElement(o.Qp, {
-        className: "com-a-RadioButton__checkmark",
-        label: ""
-      })), r.createElement("label", {
-        className: "com-a-RadioButton__label",
-        htmlFor: e
-      }, n));
-    var d = n(90355);
-    const m = ({ settings: e, onChangeSetting: t }) => r.createElement("div", {
-      className: "com-vod-VODSettingsBlock"
-    }, r.createElement(d.m, null, Object.keys(e).map(n => ((e, t, n) => r.createElement("div", {
-      className: "com-vod-VODSettingsBlock__setting",
-      key: `vod-setting-${e}`
-    }, r.createElement("span", {
-      className: "com-vod-VODSettingsBlock__setting-name"
-    }, t.label), r.createElement("ul", {
-      className: "com-vod-VODSettingsBlock__check-items"
-    }, t.items.map(o => r.createElement("li", {
-      className: "com-vod-VODSettingsBlock__check-item",
-      key: `vod-setting-${e}-${o.value}`
-    }, r.createElement(c, {
-      id: `vod-setting-${e}-${o.value}`,
-      name: `vod-setting-${e}`,
-      checked: t.value === o.value,
-      value: o.value,
-      onChange: t => ((e, t, n) => {
-        const o = e.target;
-        o && o.value && ("string" != typeof o.value && "number" != typeof o.value || n(t, o.value))
-      }
-      )(t, e, n),
-      label: o.label
-    }))))))(n, e[n], t))));
-    var u = n(7455)
-      , _ = n(4732)
-      , p = n(91926);
-    const v = Array.from(new Set(JSON.parse(document.documentElement.dataset.playbackRates ?? "[1.0,1.3,1.5,1.7,2.0]"))).sort((a, b) => a - b);
-    if (!v.includes(1))
-      v.unshift(1);
-    const b = {};
-    v.forEach(e => {
-      b[e] = p.B.ICONS_CONDITION_FAST_FORWARD_1X;
-    });
-    const y = ({ playbackRate: e, onChangePlaybackRate: t }) => {
-      return r.createElement("div", {
-        className: "com-vod-VideoControlPlaybackRate"
-      }, r.createElement("div", {
-        className: "com-vod-VideoControlPlaybackRate__select-playback-rate"
-      }, r.createElement(m, {
-        settings: (n = e,
-        {
-          playbackRate: {
-            label: u.I.player_vod_settings_playback_rate_type_label,
-            items: v.map(e => ({
-              label: (0,
-                _.H)(u.I.player_vod_settings_playback_rate_item_label, {
-                  rate: String(e)
-                }),
-              value: e
-            })),
-            value: n
-          }
-        }),
-        onChangeSetting: (e, n) => {
-          "playbackRate" === e && void 0 !== t && t(Number(n))
-        }
-      })), r.createElement("div", {
-        className: "com-vod-VideoControlPlaybackRate__icon"
-      }, r.createElement(p.x, {
-        "aria-label": (0,
-          _.H)(u.I.player_vod_settings_playback_rate_item_label, {
-            rate: String(e)
+    }, v = function (e) {
+      var n = e.id
+        , i = e.className
+        , t = e.label
+        , o = (0,
+          l._)(e, ["id", "className", "label"]);
+      return (0,
+        a.jsxs)("div", {
+          className: u()(i, "com-a-RadioButton", {
+            "com-a-RadioButton--checked": o.checked
           }),
-        symbolType: b[e]
-      })));
-      var n
+          children: [(0,
+            a.jsx)("input", (0,
+              s._)({
+                type: "radio",
+                id: n,
+                className: "com-a-RadioButton__radio"
+              }, o)), (0,
+                a.jsx)("button", {
+                  tabIndex: -1,
+                  className: "com-a-RadioButton__button",
+                  onClick: m,
+                  children: (0,
+                    a.jsx)(d.Qp, {
+                      className: "com-a-RadioButton__checkmark",
+                      label: ""
+                    })
+                }), (0,
+                  a.jsx)("label", {
+                    className: "com-a-RadioButton__label",
+                    htmlFor: n,
+                    children: void 0 === t ? "" : t
+                  })]
+        })
+    }, p = i(95885), I = i(42204), b = i(82301), h = function (e, n, i) {
+      var t = e.target;
+      t && t.value && ("string" == typeof t.value || "number" == typeof t.value) && i(n, t.value)
+    }, f = function (e) {
+      var n = e.settings
+        , i = e.onChangeSetting
+        , t = (0,
+          _.useContext)(p.mh) === I.b.MOBILE;
+      return (0,
+        a.jsx)("div", {
+          className: u()("com-vod-VODSettingsBlock", {
+            "com-vod-VODSettingsBlock--mobile": t
+          }),
+          children: (0,
+            a.jsx)(b.m, {
+              children: Object.keys(n).map(function (e) {
+                var t;
+                return t = n[e],
+                  (0,
+                    a.jsxs)("div", {
+                      className: "com-vod-VODSettingsBlock__setting",
+                      children: [(0,
+                        a.jsx)("span", {
+                          className: "com-vod-VODSettingsBlock__setting-name",
+                          children: t.label
+                        }), (0,
+                          a.jsx)("ul", {
+                            className: "com-vod-VODSettingsBlock__check-items",
+                            children: t.items.map(function (n) {
+                              return (0,
+                                a.jsx)("li", {
+                                  className: "com-vod-VODSettingsBlock__check-item",
+                                  children: (0,
+                                    a.jsx)(v, {
+                                      id: "vod-setting-".concat(e, "-").concat(n.value),
+                                      name: "vod-setting-".concat(e),
+                                      checked: t.value === n.value,
+                                      value: n.value,
+                                      onChange: function (n) {
+                                        return h(n, e, i)
+                                      },
+                                      label: n.label
+                                    })
+                                }, "vod-setting-".concat(e, "-").concat(n.value))
+                            })
+                          })]
+                    }, "vod-setting-".concat(e))
+              })
+            })
+        })
+    }, y = i(68728), x = i(64837), C = i(15479);
+    var T = Array.from(new Set(JSON.parse(document.documentElement.dataset.playbackRates ?? "[1.0,1.3,1.5,1.7,2.0]"))).sort((a, b) => a - b);
+    var L = {};
+    if (!T.includes(1))
+      T.unshift(1);
+    T.forEach(e => {
+      L[e] = C.B.ICONS_CONDITION_FAST_FORWARD_1X;
+    });
+    var A = function (e) {
+      var n = e.playbackRate
+        , i = e.onChangePlaybackRate;
+      return (0,
+        a.jsxs)("div", {
+          className: "com-vod-VideoControlPlaybackRate",
+          children: [(0,
+            a.jsx)("div", {
+              className: "com-vod-VideoControlPlaybackRate__select-playback-rate",
+              children: (0,
+                a.jsx)(f, {
+                  settings: {
+                    playbackRate: {
+                      label: y.I.player_vod_settings_playback_rate_type_label,
+                      items: T.map(function (e) {
+                        return {
+                          label: (0,
+                            x.H)(y.I.player_vod_settings_playback_rate_item_label, {
+                              rate: String(e)
+                            }),
+                          value: e
+                        }
+                      }),
+                      value: n
+                    }
+                  },
+                  onChangeSetting: function (e, n) {
+                    "playbackRate" === e && void 0 !== i && i(Number(n))
+                  }
+                })
+            }), (0,
+              a.jsx)("div", {
+                className: "com-vod-VideoControlPlaybackRate__icon",
+                children: (0,
+                  a.jsx)(C.x, {
+                    "aria-label": (0,
+                      x.H)(y.I.player_vod_settings_playback_rate_item_label, {
+                        rate: String(n)
+                      }),
+                    symbolType: L[n]
+                  })
+              })]
+        })
     }
   };
   const commentsFetchFunction = (e, t, n) => {
     n.d(t, {
-      p4: () => u,
-      TJ: () => d,
-      lK: () => h,
-      Gy: () => p,
-      f5: () => v
+      lK: () => C,
+      p4: () => v,
+      f5: () => f,
+      Gy: () => _,
+      TJ: () => p
     });
-    var a = n(61584)
-      , o = n(11662)
-      , i = n(46337);
-    function l(e, t, n) {
-      return (t = function (e) {
-        var t = function (e, t) {
-          if ("object" != typeof e || !e)
-            return e;
-          var n = e[Symbol.toPrimitive];
-          if (void 0 !== n) {
-            var a = n.call(e, t || "default");
-            if ("object" != typeof a)
-              return a;
-            throw new TypeError("@@toPrimitive must return a primitive value.")
-          }
-          return ("string" === t ? String : Number)(e)
-        }(e, "string");
-        return "symbol" == typeof t ? t : t + ""
-      }(t)) in e ? Object.defineProperty(e, t, {
-        value: n,
-        enumerable: !0,
-        configurable: !0,
-        writable: !0
-      }) : e[t] = n,
-        e
-    }
-    class s {
-      get createdAtMs() {
+    var i = n(77371)
+      , o = n(55699)
+      , a = n(78089)
+      , r = n(53304)
+      , l = n(41901)
+      , s = n(57837)
+      , c = n(46337)
+      , u = function () {
+        function e(t) {
+          (0,
+            r._)(this, e),
+            (0,
+              s._)(this, "_createdAtMs", void 0),
+            (0,
+              s._)(this, "_id", void 0),
+            (0,
+              s._)(this, "_message", void 0),
+            (0,
+              s._)(this, "_userId", void 0),
+            (0,
+              s._)(this, "_isOwner", void 0),
+            this._createdAtMs = t.createdAtMs,
+            this._id = t.id,
+            this._message = t.message,
+            this._userId = t.userId,
+            this._isOwner = t.isOwner,
+            Object.freeze(this)
+        }
         return (0,
-          i.h)(this._createdAtMs, 0)
-      }
-      get id() {
-        return (0,
-          i.h)(this._id, "")
-      }
-      get message() {
-        return (0,
-          i.h)(this._message, "")
-      }
-      get userId() {
-        return (0,
-          i.h)(this._userId, "")
-      }
-      get isOwner() {
-        return !0 === this._isOwner
-      }
-      constructor(e) {
-        l(this, "_createdAtMs", void 0),
-          l(this, "_id", void 0),
-          l(this, "_message", void 0),
-          l(this, "_userId", void 0),
-          l(this, "_isOwner", void 0),
-          this._createdAtMs = e.createdAtMs,
-          this._id = e.id,
-          this._message = e.message,
-          this._userId = e.userId,
-          this._isOwner = e.isOwner,
-          Object.freeze(this)
-      }
-    }
-    var r = n(14101);
-    function c() {
+          l._)(e, [{
+            key: "createdAtMs",
+            get: function () {
+              return (0,
+                c.h)(this._createdAtMs, 0)
+            }
+          }, {
+            key: "id",
+            get: function () {
+              return (0,
+                c.h)(this._id, "")
+            }
+          }, {
+            key: "message",
+            get: function () {
+              return (0,
+                c.h)(this._message, "")
+            }
+          }, {
+            key: "userId",
+            get: function () {
+              return (0,
+                c.h)(this._userId, "")
+            }
+          }, {
+            key: "isOwner",
+            get: function () {
+              return !0 === this._isOwner
+            }
+          }]),
+          e
+      }()
+      , m = n(48906);
+    function d() {
       return (0,
-        a.z5)().userProfileValue.userId
+        o.z5)().userProfileValue.userId
     }
-    function m(e, t) {
-      const n = t();
+    function h(e, t) {
+      var n = t();
       if (e)
         e.slice().reverse().forEach(e => window.dispatchEvent(new CustomEvent("new-comment", { detail: e })));
-      return (e || []).map(e => {
-        return new s(Object.assign({
+      return (e || []).map(function (e) {
+        return new u(Object.assign({
           isOwner: n === e.userId
         }, e))
-      }
-      );
-    }
-    function u({ slotId: e, since: t, until: n, limit: a }, i = c) {
-      r.P.get({
-        slotId: e,
-        since: t,
-        until: n,
-        limit: a
-      }).subscribe({
-        next: ({ body: { comments: t } }) => {
-          o.A.fetchComments$.next({
-            slotId: e,
-            comments: m(t, i)
-          })
-        }
-        ,
-        error: e => o.A.fetchCommentsError$.next(e)
-      })
-    }
-    function d({ slotId: e, since: t, until: n, limit: a }, i = c) {
-      r.P.get({
-        slotId: e,
-        since: t,
-        until: n,
-        limit: a
-      }).subscribe({
-        next: ({ body: { comments: t } }) => {
-          o.A.fetchNewComments$.next({
-            slotId: e,
-            comments: m(t, i)
-          })
-        }
-        ,
-        error: e => o.A.fetchNewCommentsError$.next(e)
-      })
-    }
-    function h({ slotId: e, since: t, until: n, limit: a }, i = c) {
-      r.P.get({
-        slotId: e,
-        since: t,
-        until: n,
-        limit: a
-      }).subscribe({
-        next: ({ body: { comments: t } }) => {
-          o.A.fetchPastComments$.next({
-            slotId: e,
-            comments: m(t, i)
-          })
-        }
-        ,
-        error: e => o.A.fetchPastCommentsError$.next(e)
-      })
-    }
-    function p({ message: e, twitter: t, slotId: n, programId: a, position: i, elapsed: l }, m = c) {
-      r.P.save({
-        message: e,
-        slotId: n,
-        position: i,
-        ...t ? {
-          share: {
-            twitter: t,
-            elapsed: l
-          }
-        } : {}
-      }).subscribe({
-        next: ({ body: t }) => {
-          if (!t)
-            return;
-          const { id: i, createdAtMs: r } = t
-            , c = new s({
-              createdAtMs: r,
-              id: i,
-              message: e,
-              userId: m(),
-              isOwner: !0
-            });
-          o.A.postComment$.next({
-            message: e,
-            slotId: n,
-            programId: a,
-            elapsed: l
-          }),
-            o.A.fetchNewComments$.next({
-              slotId: n,
-              comments: [c]
-            })
-        }
-        ,
-        error: ({ meta: e }) => o.A.postCommentError$.next(e.status)
       })
     }
     function v(e) {
-      r.P.saveReport(e).subscribe({
-        next: () => o.A.postReport$.next(e),
-        error: e => o.A.postReportError$.next(e)
+      var t = e.slotId
+        , n = e.since
+        , i = e.until
+        , o = e.limit
+        , r = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : d;
+      m.P.get({
+        slotId: t,
+        since: n,
+        until: i,
+        limit: o
+      }).subscribe({
+        next: function (e) {
+          var n = e.body.comments;
+          a.A.fetchComments$.next({
+            slotId: t,
+            comments: h(n, r)
+          })
+        },
+        error: function (e) {
+          return a.A.fetchCommentsError$.next(e)
+        }
+      })
+    }
+    function p(e) {
+      var t = e.slotId
+        , n = e.since
+        , i = e.until
+        , o = e.limit
+        , r = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : d;
+      m.P.get({
+        slotId: t,
+        since: n,
+        until: i,
+        limit: o
+      }).subscribe({
+        next: function (e) {
+          var n = e.body.comments;
+          a.A.fetchNewComments$.next({
+            slotId: t,
+            comments: h(n, r)
+          })
+        },
+        error: function (e) {
+          return a.A.fetchNewCommentsError$.next(e)
+        }
+      })
+    }
+    function C(e) {
+      var t = e.slotId
+        , n = e.since
+        , i = e.until
+        , o = e.limit
+        , r = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : d;
+      m.P.get({
+        slotId: t,
+        since: n,
+        until: i,
+        limit: o
+      }).subscribe({
+        next: function (e) {
+          var n = e.body.comments;
+          a.A.fetchPastComments$.next({
+            slotId: t,
+            comments: h(n, r)
+          })
+        },
+        error: function (e) {
+          return a.A.fetchPastCommentsError$.next(e)
+        }
+      })
+    }
+    function _(e) {
+      var t = e.message
+        , n = e.twitter
+        , o = e.slotId
+        , r = e.programId
+        , l = e.position
+        , s = e.elapsed
+        , c = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : d;
+      m.P.save((0,
+        i._)({
+          message: t,
+          slotId: o,
+          position: l
+        }, n ? {
+          share: {
+            twitter: n,
+            elapsed: s
+          }
+        } : {})).subscribe({
+          next: function (e) {
+            var n = e.body;
+            if (n) {
+              var i = n.id
+                , l = new u({
+                  createdAtMs: n.createdAtMs,
+                  id: i,
+                  message: t,
+                  userId: c(),
+                  isOwner: !0
+                });
+              a.A.postComment$.next({
+                message: t,
+                slotId: o,
+                programId: r,
+                elapsed: s
+              }),
+                a.A.fetchNewComments$.next({
+                  slotId: o,
+                  comments: [l]
+                })
+            }
+          },
+          error: function (e) {
+            var t = e.meta;
+            return a.A.postCommentError$.next(t.status)
+          }
+        })
+    }
+    function f(e) {
+      m.P.saveReport(e).subscribe({
+        next: function () {
+          return a.A.postReport$.next(e)
+        },
+        error: function (e) {
+          return a.A.postReportError$.next(e)
+        }
       })
     }
   };
-  const archiveCommentsFetchFunction = (t, e, i) => {
-    i.d(e, {
-      n: () => j
+  const archiveCommentsFetchFunction = (t, e, n) => {
+    n.d(e, {
+      n: () => A
     });
-    var n = i(98184)
-      , r = i(79313)
-      , s = i(4780)
-      , o = i(14594)
-      , a = i(64307)
-      , c = i(60015);
-    function u(t, e, i) {
-      return (e = function (t) {
-        var e = function (t, e) {
-          if ("object" != typeof t || !t)
-            return t;
-          var i = t[Symbol.toPrimitive];
-          if (void 0 !== i) {
-            var n = i.call(t, e || "default");
-            if ("object" != typeof n)
-              return n;
-            throw new TypeError("@@toPrimitive must return a primitive value.")
-          }
-          return ("string" === e ? String : Number)(t)
-        }(t, "string");
-        return "symbol" == typeof e ? e : e + ""
-      }(e)) in t ? Object.defineProperty(t, e, {
-        value: i,
-        enumerable: !0,
-        configurable: !0,
-        writable: !0
-      }) : t[e] = i,
-        t
-    }
-    class l {
-      constructor(t, e, i, n) {
-        u(this, "_intent", void 0),
-          u(this, "_gateway", void 0),
-          u(this, "_repo", void 0),
-          this._intent = t,
-          this._gateway = e,
-          this._repo = i
-      }
-      activate() {
-        const t = this._intent.dispatcher()
-          , e = this._gateway
-          , i = this._repo
-          , n = new a.yU;
-        return n.add(function (t, e) {
-          const i = t.slotId$.subscribe({
-            next: t => {
-              e.writeSlotId(t)
+    var i = n(53304)
+      , r = n(41901)
+      , o = n(57837)
+      , a = n(65715)
+      , s = n(95424)
+      , u = n(87716)
+      , c = n(82249)
+      , l = n(5835)
+      , d = n(32030)
+      , h = n(68470)
+      , v = function () {
+        function t(e, n, r, a) {
+          (0,
+            i._)(this, t),
+            (0,
+              o._)(this, "_intent", void 0),
+            (0,
+              o._)(this, "_gateway", void 0),
+            (0,
+              o._)(this, "_repo", void 0),
+            this._intent = e,
+            this._gateway = n,
+            this._repo = r
+        }
+        return (0,
+          r._)(t, [{
+            key: "activate",
+            value: function () {
+              var t, e, n, i, r, o, a, s, v, p, b, f, _, m, y, C, S, g, k, x, P, w, E, $, I = this._intent.dispatcher(), A = this._gateway, T = this._repo, N = new d.yU;
+              return N.add((t = I,
+                e = T,
+                t.slotId$.subscribe({
+                  next: function (t) {
+                    e.writeSlotId(t)
+                  },
+                  error: c.H
+                }))),
+                N.add((n = I,
+                  i = A,
+                  r = T,
+                  n.fetchAllCount$.pipe((0,
+                    h.Z)(function (t) {
+                      return i.fetchCount({
+                        slotId: t
+                      })
+                    })).subscribe({
+                      next: function (t) {
+                        (0,
+                          l.Bi)(t, function (t) {
+                            r.writeAllCount(t)
+                          }, function (t) {
+                            ((0,
+                              u._)(t, Error) || (0,
+                                u._)(t, RangeError)) && r.writeAllCountError(Number(t.message))
+                          })
+                      },
+                      error: c.H
+                    }))),
+                N.add((o = I,
+                  a = A,
+                  s = T,
+                  o.fetchCount$.pipe((0,
+                    h.Z)(function (t) {
+                      return a.fetchCount(t)
+                    })).subscribe({
+                      next: function (t) {
+                        (0,
+                          l.Bi)(t, function (t) {
+                            s.writeCount(t)
+                          }, function (t) {
+                            ((0,
+                              u._)(t, Error) || (0,
+                                u._)(t, RangeError)) && s.writeCountError(Number(t.message))
+                          })
+                      },
+                      error: c.H
+                    }))),
+                N.add((v = I,
+                  p = T,
+                  v.updateCommentFilter$.subscribe({
+                    next: function (t) {
+                      p.updateCommentFilter(t)
+                    },
+                    error: c.H
+                  }))),
+                N.add((b = I,
+                  f = T,
+                  b.putElapsed$.subscribe({
+                    next: function (t) {
+                      f.writeElapsed(t)
+                    },
+                    error: c.H
+                  }))),
+                N.add((_ = I,
+                  m = T,
+                  _.putCurrentPosition$.subscribe({
+                    next: function (t) {
+                      m.writeCurrentPosition(t)
+                    },
+                    error: c.H
+                  }))),
+                N.add((y = I,
+                  C = T,
+                  y.clearComments$.subscribe({
+                    next: function () {
+                      C.clearComments()
+                    },
+                    error: c.H
+                  }))),
+                N.add((S = I,
+                  g = A,
+                  k = T,
+                  S.fetchPastComments$.pipe((0,
+                    h.Z)(function (t) {
+                      return g.fetchComments(t)
+                    })).subscribe({
+                      next: function (t) {
+                        (0,
+                          l.Bi)(t, function (t) {
+                            k.addPastComments(t)
+                          }, function (t) {
+                            ((0,
+                              u._)(t, Error) || (0,
+                                u._)(t, RangeError)) && k.writeCommentsError(Number(t.message))
+                          })
+                      },
+                      error: c.H
+                    }))),
+                N.add((x = I,
+                  P = A,
+                  w = T,
+                  x.fetchNewComments$.pipe((0,
+                    h.Z)(function (t) {
+                      return P.fetchComments(t)
+                    })).subscribe({
+                      next: function (t) {
+                        (0,
+                          l.Bi)(t, function (t) {
+                            w.addNewComments(t)
+                          }, function (t) {
+                            ((0,
+                              u._)(t, Error) || (0,
+                                u._)(t, RangeError)) && w.writeCommentsError(Number(t.message))
+                          })
+                      },
+                      error: c.H
+                    }))),
+                N.add((E = I,
+                  $ = T,
+                  E.clearCommentCount$.subscribe({
+                    next: function () {
+                      $.writeCount(0)
+                    },
+                    error: c.H
+                  }))),
+                N
             }
-            ,
-            error: s.H
-          });
-          return i
-        }(t, i)),
-          n.add(function (t, e, i) {
-            const n = t.fetchAllCount$.pipe((0,
-              c.Z)(t => e.fetchCount({
-                slotId: t
-              }))).subscribe({
-                next: t => {
-                  (0,
-                    o.Bi)(t, t => {
-                      i.writeAllCount(t)
-                    }
-                      , t => {
-                        (t instanceof Error || t instanceof RangeError) && i.writeAllCountError(Number(t.message))
-                      }
-                    )
-                }
-                ,
-                error: s.H
-              });
-            return n
-          }(t, e, i)),
-          n.add(function (t, e, i) {
-            const n = t.fetchCount$.pipe((0,
-              c.Z)(t => e.fetchCount(t))).subscribe({
-                next: t => {
-                  (0,
-                    o.Bi)(t, t => {
-                      i.writeCount(t)
-                    }
-                      , t => {
-                        (t instanceof Error || t instanceof RangeError) && i.writeCountError(Number(t.message))
-                      }
-                    )
-                }
-                ,
-                error: s.H
-              });
-            return n
-          }(t, e, i)),
-          n.add(function (t, e) {
-            const i = t.updateCommentFilter$.subscribe({
-              next: t => {
-                e.updateCommentFilter(t)
-              }
-              ,
-              error: s.H
-            });
-            return i
-          }(t, i)),
-          n.add(function (t, e) {
-            const i = t.putElapsed$.subscribe({
-              next: t => {
-                e.writeElapsed(t)
-              }
-              ,
-              error: s.H
-            });
-            return i
-          }(t, i)),
-          n.add(function (t, e) {
-            const i = t.putCurrentPosition$.subscribe({
-              next: t => {
-                e.writeCurrentPosition(t)
-              }
-              ,
-              error: s.H
-            });
-            return i
-          }(t, i)),
-          n.add(function (t, e) {
-            const i = t.clearComments$.subscribe({
-              next: () => {
-                e.clearComments()
-              }
-              ,
-              error: s.H
-            });
-            return i
-          }(t, i)),
-          n.add(function (t, e, i) {
-            const n = t.fetchPastComments$.pipe((0,
-              c.Z)(t => e.fetchComments(t))).subscribe({
-                next: t => {
-                  (0,
-                    o.Bi)(t, t => {
-                      i.addPastComments(t)
-                    }
-                      , t => {
-                        (t instanceof Error || t instanceof RangeError) && i.writeCommentsError(Number(t.message))
-                      }
-                    )
-                }
-                ,
-                error: s.H
-              });
-            return n
-          }(t, e, i)),
-          n.add(function (t, e, i) {
-            const n = t.fetchNewComments$.pipe((0,
-              c.Z)(t => e.fetchComments(t))).subscribe({
-                next: t => {
-                  (0,
-                    o.Bi)(t, t => {
-                      i.addNewComments(t)
-                    }
-                      , t => {
-                        (t instanceof Error || t instanceof RangeError) && i.writeCommentsError(Number(t.message))
-                      }
-                    )
-                }
-                ,
-                error: s.H
-              });
-            return n
-          }(t, e, i)),
-          n.add(function (t, e) {
-            return t.clearCommentCount$.subscribe({
-              next: () => {
-                e.writeCount(0)
-              }
-              ,
-              error: s.H
-            })
-          }(t, i)),
-          n
-      }
+          }]),
+          t
+      }()
+      , p = n(99519)
+      , b = n(46716)
+      , f = n(46337)
+      , _ = function () {
+        function t() {
+          var e = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : {};
+          (0,
+            i._)(this, t),
+            (0,
+              o._)(this, "id", void 0),
+            (0,
+              o._)(this, "userId", void 0),
+            (0,
+              o._)(this, "isOwner", void 0),
+            (0,
+              o._)(this, "message", void 0),
+            (0,
+              o._)(this, "createdAtMs", void 0),
+            (0,
+              o._)(this, "elapsedMs", void 0),
+            this.id = (0,
+              f.h)(e.id, ""),
+            this.userId = (0,
+              f.h)(e.userId, ""),
+            this.isOwner = (0,
+              f.h)(e.isOwner, !1),
+            this.message = (0,
+              f.h)(e.message, ""),
+            this.createdAtMs = (0,
+              f.h)(e.createdAtMs, 0),
+            this.elapsedMs = (0,
+              f.h)(e.elapsedMs, 0),
+            Object.freeze(this)
+        }
+        return (0,
+          r._)(t, null, [{
+            key: "fromObject",
+            value: function (e) {
+              return new t({
+                id: (0,
+                  f.h)(e.id, ""),
+                userId: (0,
+                  f.h)(e.userId, ""),
+                isOwner: (0,
+                  f.h)(e.isOwner, !1),
+                message: (0,
+                  f.h)(e.message, ""),
+                createdAtMs: (0,
+                  f.h)(e.createdAtMs, 0),
+                elapsedMs: (0,
+                  f.h)(e.elapsedMs, 0)
+              })
+            }
+          }]),
+          t
+      }()
+      , m = n(59717)
+      , y = function () {
+        function t(e) {
+          (0,
+            i._)(this, t),
+            (0,
+              o._)(this, "_driver", void 0),
+            this._driver = e
+        }
+        return (0,
+          r._)(t, [{
+            key: "fetchCount",
+            value: function (t) {
+              var e = "/v1/slots/".concat(t.slotId, "/archiveCommentStats")
+                , n = t.until ? new URLSearchParams([["until", String(t.until)]]) : ""
+                , i = "".concat(e, "?").concat(n);
+              return this._driver.getWithCacheInvalidation(i, {}).then(function (t) {
+                var e = t.status;
+                if (e === b.OK)
+                  return t;
+                throw Error(String(e))
+              }).then(p.z).then(function (t) {
+                return t.count || 0
+              }).then(m.TC, m.KC)
+            }
+          }, {
+            key: "fetchComments",
+            value: function (t) {
+              var e = "/v1/slots/".concat(t.slotId, "/archiveComments")
+                , n = new URLSearchParams;
+              void 0 !== t.until && n.set("until", t.until.toString()),
+                void 0 !== t.since && n.set("since", t.since.toString()),
+                n.set("limit", t.limit.toString());
+              var i = "".concat(e, "?").concat(n);
+              return this._driver.getWithCacheInvalidation(i, {}).then(function (t) {
+                var e = t.status;
+                if (e === b.OK)
+                  return t;
+                throw Error(String(e))
+              }).then(p.z).then(function (e) {
+                return (e.comments && e.comments.length > 0 ? e.comments : []).reverse().map(function (e) {
+                  window.dispatchEvent(new CustomEvent("new-comment", { detail: e }));
+                  var n = Object.assign({}, e, {
+                    isOwner: t.userId === e.userId
+                  });
+                  return _.fromObject(n)
+                })
+              }).then(m.TC, m.KC)
+            }
+          }]),
+          t
+      }()
+      , C = n(58679)
+      , S = n(10283)
+      , g = n(7738)
+      , k = n(3429)
+      , x = n(77989)
+      , P = n(4025)
+      , w = function () {
+        function t(e) {
+          (0,
+            i._)(this, t),
+            (0,
+              o._)(this, "_blockUserIdList", void 0),
+            (0,
+              o._)(this, "_slotIdSubject", void 0),
+            (0,
+              o._)(this, "_allCountSubject", void 0),
+            (0,
+              o._)(this, "_countSubject", void 0),
+            (0,
+              o._)(this, "_elapsedSubject", void 0),
+            (0,
+              o._)(this, "_currentPositionSubject", void 0),
+            (0,
+              o._)(this, "_commentsSubject", void 0),
+            (0,
+              o._)(this, "_allCountErrorSubject", void 0),
+            (0,
+              o._)(this, "_countErrorSubject", void 0),
+            (0,
+              o._)(this, "_commentsErrorSubject", void 0),
+            this._blockUserIdList = [],
+            this._slotIdSubject = new P.t(e.slotId),
+            this._allCountSubject = new P.t(e.allCount),
+            this._countSubject = new P.t(e.count),
+            this._elapsedSubject = new P.t(e.elapsed),
+            this._currentPositionSubject = new P.t(e.currentPosition),
+            this._commentsSubject = new P.t(e.comments),
+            this._allCountErrorSubject = new P.t(e.allCountError),
+            this._countErrorSubject = new P.t(e.countError),
+            this._commentsErrorSubject = new P.t(e.commentsError)
+        }
+        return (0,
+          r._)(t, [{
+            key: "slotId",
+            get: function () {
+              return this._slotIdSubject.getValue()
+            }
+          }, {
+            key: "allCount",
+            get: function () {
+              return this._allCountSubject.getValue()
+            }
+          }, {
+            key: "count",
+            get: function () {
+              return this._countSubject.getValue()
+            }
+          }, {
+            key: "comments",
+            get: function () {
+              return this._commentsSubject.getValue()
+            }
+          }, {
+            key: "elapsed",
+            get: function () {
+              return this._elapsedSubject.getValue()
+            }
+          }, {
+            key: "currentPosition",
+            get: function () {
+              return this._currentPositionSubject.getValue()
+            }
+          }, {
+            key: "allCountError",
+            get: function () {
+              return this._allCountErrorSubject.getValue()
+            }
+          }, {
+            key: "countError",
+            get: function () {
+              return this._countErrorSubject.getValue()
+            }
+          }, {
+            key: "commentsError",
+            get: function () {
+              return this._commentsErrorSubject.getValue()
+            }
+          }, {
+            key: "writeSlotId",
+            value: function (t) {
+              this._slotIdSubject.next(t)
+            }
+          }, {
+            key: "onUpdateSlotId",
+            value: function () {
+              return this._slotIdSubject.asObservable()
+            }
+          }, {
+            key: "writeAllCount",
+            value: function (t) {
+              this._allCountSubject.next(t)
+            }
+          }, {
+            key: "onUpdateAllCount",
+            value: function () {
+              return this._allCountSubject.asObservable()
+            }
+          }, {
+            key: "writeCount",
+            value: function (t) {
+              this._countSubject.next(t)
+            }
+          }, {
+            key: "onUpdateCount",
+            value: function () {
+              return this._countSubject.asObservable()
+            }
+          }, {
+            key: "writeElapsed",
+            value: function (t) {
+              this._elapsedSubject.next(t)
+            }
+          }, {
+            key: "onUpdateElapsed",
+            value: function () {
+              return this._elapsedSubject.asObservable()
+            }
+          }, {
+            key: "writeCurrentPosition",
+            value: function (t) {
+              this._currentPositionSubject.next(t)
+            }
+          }, {
+            key: "onUpdateCurrentPosition",
+            value: function () {
+              return this._currentPositionSubject.asObservable()
+            }
+          }, {
+            key: "onUpdateComments",
+            value: function () {
+              return this._commentsSubject.asObservable()
+            }
+          }, {
+            key: "addPastComments",
+            value: function (t) {
+              var e = I(t, this.comments, this._blockUserIdList);
+              this._commentsSubject.next(e)
+            }
+          }, {
+            key: "addNewComments",
+            value: function (t) {
+              var e = I(this.comments, t, this._blockUserIdList);
+              this._commentsSubject.next(e)
+            }
+          }, {
+            key: "updateCommentFilter",
+            value: function (t) {
+              this._blockUserIdList = t;
+              var e = this.comments.filter($(this._blockUserIdList));
+              this._commentsSubject.next(e)
+            }
+          }, {
+            key: "clearComments",
+            value: function () {
+              this._commentsSubject.next([])
+            }
+          }, {
+            key: "writeAllCountError",
+            value: function (t) {
+              this._allCountErrorSubject.next(t)
+            }
+          }, {
+            key: "onUpdateAllCountError",
+            value: function () {
+              return this._allCountErrorSubject.asObservable()
+            }
+          }, {
+            key: "writeCountError",
+            value: function (t) {
+              this._countErrorSubject.next(t)
+            }
+          }, {
+            key: "onUpdateCountError",
+            value: function () {
+              return this._countErrorSubject.asObservable()
+            }
+          }, {
+            key: "writeCommentsError",
+            value: function (t) {
+              this._commentsErrorSubject.next(t)
+            }
+          }, {
+            key: "onUpdateCommentsError",
+            value: function () {
+              return this._commentsErrorSubject.asObservable()
+            }
+          }]),
+          t
+      }();
+    function E(t, e, n) {
+      return e === n.findIndex(function (e) {
+        return e.id === t.id
+      })
     }
-    var d = i(78614)
-      , h = i(5209)
-      , p = i(46337);
-    function b(t, e, i) {
-      return (e = function (t) {
-        var e = function (t, e) {
-          if ("object" != typeof t || !t)
-            return t;
-          var i = t[Symbol.toPrimitive];
-          if (void 0 !== i) {
-            var n = i.call(t, e || "default");
-            if ("object" != typeof n)
-              return n;
-            throw new TypeError("@@toPrimitive must return a primitive value.")
-          }
-          return ("string" === e ? String : Number)(t)
-        }(t, "string");
-        return "symbol" == typeof e ? e : e + ""
-      }(e)) in t ? Object.defineProperty(t, e, {
-        value: i,
-        enumerable: !0,
-        configurable: !0,
-        writable: !0
-      }) : t[e] = i,
-        t
-    }
-    class m {
-      static fromObject(t) {
-        const e = (0,
-          p.h)(t.id, "")
-          , i = (0,
-            p.h)(t.userId, "")
-          , n = (0,
-            p.h)(t.isOwner, !1)
-          , r = (0,
-            p.h)(t.message, "")
-          , s = (0,
-            p.h)(t.createdAtMs, 0)
-          , o = (0,
-            p.h)(t.elapsedMs, 0);
-        return new m({
-          id: e,
-          userId: i,
-          isOwner: n,
-          message: r,
-          createdAtMs: s,
-          elapsedMs: o
+    function $(t) {
+      return function (e) {
+        return !t.find(function (t) {
+          return t === e.userId
         })
       }
-      constructor(t = {}) {
-        b(this, "id", void 0),
-          b(this, "userId", void 0),
-          b(this, "isOwner", void 0),
-          b(this, "message", void 0),
-          b(this, "createdAtMs", void 0),
-          b(this, "elapsedMs", void 0),
-          this.id = (0,
-            p.h)(t.id, ""),
-          this.userId = (0,
-            p.h)(t.userId, ""),
-          this.isOwner = (0,
-            p.h)(t.isOwner, !1),
-          this.message = (0,
-            p.h)(t.message, ""),
-          this.createdAtMs = (0,
-            p.h)(t.createdAtMs, 0),
-          this.elapsedMs = (0,
-            p.h)(t.elapsedMs, 0),
-          Object.freeze(this)
-      }
     }
-    var v = i(59717);
-    function y(t, e, i) {
-      return (e = function (t) {
-        var e = function (t, e) {
-          if ("object" != typeof t || !t)
-            return t;
-          var i = t[Symbol.toPrimitive];
-          if (void 0 !== i) {
-            var n = i.call(t, e || "default");
-            if ("object" != typeof n)
-              return n;
-            throw new TypeError("@@toPrimitive must return a primitive value.")
-          }
-          return ("string" === e ? String : Number)(t)
-        }(t, "string");
-        return "symbol" == typeof e ? e : e + ""
-      }(e)) in t ? Object.defineProperty(t, e, {
-        value: i,
-        enumerable: !0,
-        configurable: !0,
-        writable: !0
-      }) : t[e] = i,
-        t
+    function I(t, e, n) {
+      var i = (0,
+        S._)(t).concat((0,
+          S._)(e)).filter(E).filter($(n))
+        , r = i.length - x.Kx;
+      return r > 0 ? i.slice(r) : i
     }
-    class f {
-      constructor(t) {
-        y(this, "_driver", void 0),
-          this._driver = t
-      }
-      fetchCount(t) {
-        const e = `${`/v1/slots/${t.slotId}/archiveCommentStats`}?${t.until ? new URLSearchParams([["until", String(t.until)]]) : ""}`;
-        return this._driver.getWithCacheInvalidation(e, {}).then(t => {
-          const e = t.status;
-          if (e === h.OK)
-            return t;
-          throw new Error(String(e))
-        }
-        ).then(d.z).then(t => t.count || 0).then(v.TC, v.KC)
-      }
-      fetchComments(t) {
-        const e = `/v1/slots/${t.slotId}/archiveComments`
-          , i = new URLSearchParams;
-        void 0 !== t.until && i.set("until", t.until.toString()),
-          void 0 !== t.since && i.set("since", t.since.toString()),
-          i.set("limit", t.limit.toString());
-        const n = `${e}?${i}`;
-        return this._driver.getWithCacheInvalidation(n, {}).then(t => {
-          const e = t.status;
-          if (e === h.OK)
-            return t;
-          throw new Error(String(e))
-        }
-        ).then(d.z).then(e => (e.comments && e.comments.length > 0 ? e.comments : []).reverse().map(e => {
-          window.dispatchEvent(new CustomEvent("new-comment", { detail: e }));
-          const i = Object.assign({}, e, {
-            isOwner: t.userId === e.userId
-          });
-          return m.fromObject(i)
-        }
-        )).then(v.TC, v.KC)
-      }
-    }
-    var _ = i(63638);
-    function C() {
-      const t = {
-        slotId$: new _.B,
-        open$: new _.B,
-        close$: new _.B,
-        fetchAllCount$: new _.B,
-        fetchCount$: new _.B,
-        fetchPastComments$: new _.B,
-        fetchNewComments$: new _.B,
-        updateCommentFilter$: new _.B,
-        putElapsed$: new _.B,
-        clearComments$: new _.B,
-        seek$: new _.B,
-        changePlaying$: new _.B,
-        putCurrentPosition$: new _.B,
-        clearCommentCount$: new _.B
-      };
-      return {
-        dispatcher: () => t,
-        setSlotId: function (e) {
-          t.slotId$.next(e)
-        },
-        open: function () {
-          t.open$.next()
-        },
-        close: function () {
-          t.close$.next()
-        },
-        fetchAllCount: function (e) {
-          t.fetchAllCount$.next(e)
-        },
-        fetchCount: function (e) {
-          t.fetchCount$.next(e)
-        },
-        fetchNewComments: function (e) {
-          t.fetchNewComments$.next(e)
-        },
-        fetchPastComments: function (e) {
-          t.fetchPastComments$.next(e)
-        },
-        updateCommentFilter: function (e) {
-          t.updateCommentFilter$.next(e)
-        },
-        putElapsed: function (e) {
-          t.putElapsed$.next(e)
-        },
-        clearComments: function () {
-          t.clearComments$.next()
-        },
-        seek: function () {
-          t.seek$.next()
-        },
-        changePlaying: function (e) {
-          t.changePlaying$.next(e)
-        },
-        putCurrentPosition: function (e) {
-          t.putCurrentPosition$.next(e)
-        },
-        clearCommentCount: function () {
-          t.clearCommentCount$.next()
-        }
-      }
-    }
-    var S = i(52963)
-      , g = i(13284)
-      , P = i(71615)
-      , w = i(4025);
-    function x(t, e, i) {
-      return (e = function (t) {
-        var e = function (t, e) {
-          if ("object" != typeof t || !t)
-            return t;
-          var i = t[Symbol.toPrimitive];
-          if (void 0 !== i) {
-            var n = i.call(t, e || "default");
-            if ("object" != typeof n)
-              return n;
-            throw new TypeError("@@toPrimitive must return a primitive value.")
-          }
-          return ("string" === e ? String : Number)(t)
-        }(t, "string");
-        return "symbol" == typeof e ? e : e + ""
-      }(e)) in t ? Object.defineProperty(t, e, {
-        value: i,
-        enumerable: !0,
-        configurable: !0,
-        writable: !0
-      }) : t[e] = i,
-        t
-    }
-    class E {
-      constructor(t) {
-        x(this, "_blockUserIdList", void 0),
-          x(this, "_slotIdSubject", void 0),
-          x(this, "_allCountSubject", void 0),
-          x(this, "_countSubject", void 0),
-          x(this, "_elapsedSubject", void 0),
-          x(this, "_currentPositionSubject", void 0),
-          x(this, "_commentsSubject", void 0),
-          x(this, "_allCountErrorSubject", void 0),
-          x(this, "_countErrorSubject", void 0),
-          x(this, "_commentsErrorSubject", void 0),
-          this._blockUserIdList = [],
-          this._slotIdSubject = new w.t(t.slotId),
-          this._allCountSubject = new w.t(t.allCount),
-          this._countSubject = new w.t(t.count),
-          this._elapsedSubject = new w.t(t.elapsed),
-          this._currentPositionSubject = new w.t(t.currentPosition),
-          this._commentsSubject = new w.t(t.comments),
-          this._allCountErrorSubject = new w.t(t.allCountError),
-          this._countErrorSubject = new w.t(t.countError),
-          this._commentsErrorSubject = new w.t(t.commentsError)
-      }
-      get slotId() {
-        return this._slotIdSubject.getValue()
-      }
-      get allCount() {
-        return this._allCountSubject.getValue()
-      }
-      get count() {
-        return this._countSubject.getValue()
-      }
-      get comments() {
-        return this._commentsSubject.getValue()
-      }
-      get elapsed() {
-        return this._elapsedSubject.getValue()
-      }
-      get currentPosition() {
-        return this._currentPositionSubject.getValue()
-      }
-      get allCountError() {
-        return this._allCountErrorSubject.getValue()
-      }
-      get countError() {
-        return this._countErrorSubject.getValue()
-      }
-      get commentsError() {
-        return this._commentsErrorSubject.getValue()
-      }
-      writeSlotId(t) {
-        this._slotIdSubject.next(t)
-      }
-      onUpdateSlotId() {
-        return this._slotIdSubject.asObservable()
-      }
-      writeAllCount(t) {
-        this._allCountSubject.next(t)
-      }
-      onUpdateAllCount() {
-        return this._allCountSubject.asObservable()
-      }
-      writeCount(t) {
-        this._countSubject.next(t)
-      }
-      onUpdateCount() {
-        return this._countSubject.asObservable()
-      }
-      writeElapsed(t) {
-        this._elapsedSubject.next(t)
-      }
-      onUpdateElapsed() {
-        return this._elapsedSubject.asObservable()
-      }
-      writeCurrentPosition(t) {
-        this._currentPositionSubject.next(t)
-      }
-      onUpdateCurrentPosition() {
-        return this._currentPositionSubject.asObservable()
-      }
-      onUpdateComments() {
-        return this._commentsSubject.asObservable()
-      }
-      addPastComments(t) {
-        const e = A(t, this.comments, this._blockUserIdList);
-        this._commentsSubject.next(e)
-      }
-      addNewComments(t) {
-        const e = A(this.comments, t, this._blockUserIdList);
-        this._commentsSubject.next(e)
-      }
-      updateCommentFilter(t) {
-        this._blockUserIdList = t;
-        const e = this.comments.filter(T(this._blockUserIdList));
-        this._commentsSubject.next(e)
-      }
-      clearComments() {
-        this._commentsSubject.next([])
-      }
-      writeAllCountError(t) {
-        this._allCountErrorSubject.next(t)
-      }
-      onUpdateAllCountError() {
-        return this._allCountErrorSubject.asObservable()
-      }
-      writeCountError(t) {
-        this._countErrorSubject.next(t)
-      }
-      onUpdateCountError() {
-        return this._countErrorSubject.asObservable()
-      }
-      writeCommentsError(t) {
-        this._commentsErrorSubject.next(t)
-      }
-      onUpdateCommentsError() {
-        return this._commentsErrorSubject.asObservable()
-      }
-    }
-    function $() {
-      const t = function (t) {
-        return new E(t)
-      }({
-        blockUserIdList: (S.fD.get(g.ZX) || "").split(","),
-        slotId: null,
-        comments: [],
-        allCount: 0,
-        count: 0,
-        elapsed: null,
-        currentPosition: 0,
-        allCountError: 0,
-        countError: 0,
-        commentsError: 0
-      });
-      return t
-    }
-    function I(t, e, i) {
-      return e === i.findIndex(e => e.id === t.id)
-    }
-    function T(t) {
-      return e => !t.find(t => t === e.userId)
-    }
-    function A(t, e, i) {
-      const n = [...t, ...e].filter(I).filter(T(i))
-        , r = n.length - P.Kx;
-      return r > 0 ? n.slice(r) : n
-    }
-    function k(t, e, i) {
-      return (e = function (t) {
-        var e = function (t, e) {
-          if ("object" != typeof t || !t)
-            return t;
-          var i = t[Symbol.toPrimitive];
-          if (void 0 !== i) {
-            var n = i.call(t, e || "default");
-            if ("object" != typeof n)
-              return n;
-            throw new TypeError("@@toPrimitive must return a primitive value.")
-          }
-          return ("string" === e ? String : Number)(t)
-        }(t, "string");
-        return "symbol" == typeof e ? e : e + ""
-      }(e)) in t ? Object.defineProperty(t, e, {
-        value: i,
-        enumerable: !0,
-        configurable: !0,
-        writable: !0
-      }) : t[e] = i,
-        t
-    }
-    class j {
-      constructor(t) {
-        var e, i;
-        k(this, "_subscription", void 0),
-          k(this, "_gateway", void 0),
-          k(this, "_intent", void 0),
-          k(this, "_repo", void 0),
-          k(this, "_store", void 0),
-          k(this, "_playerObserver", void 0),
+    var A = function () {
+      function t(e) {
+        var n, r;
+        (0,
+          i._)(this, t),
+          (0,
+            o._)(this, "_subscription", void 0),
+          (0,
+            o._)(this, "_gateway", void 0),
+          (0,
+            o._)(this, "_intent", void 0),
+          (0,
+            o._)(this, "_repo", void 0),
+          (0,
+            o._)(this, "_store", void 0),
+          (0,
+            o._)(this, "_playerObserver", void 0),
           this._subscription = null,
-          this._gateway = (e = r.bx,
-            new f(e)),
-          this._intent = C(),
-          this._repo = $(),
-          this._store = (i = this._repo,
+          this._gateway = new y(s.bx),
+          this._intent = (n = {
+            slotId$: new C.B,
+            open$: new C.B,
+            close$: new C.B,
+            fetchAllCount$: new C.B,
+            fetchCount$: new C.B,
+            fetchPastComments$: new C.B,
+            fetchNewComments$: new C.B,
+            updateCommentFilter$: new C.B,
+            putElapsed$: new C.B,
+            clearComments$: new C.B,
+            seek$: new C.B,
+            changePlaying$: new C.B,
+            putCurrentPosition$: new C.B,
+            clearCommentCount$: new C.B
+          },
           {
-            get slotId() {
-              return i.slotId
+            dispatcher: function () {
+              return n
             },
-            get slotId$() {
-              return i.onUpdateSlotId()
+            setSlotId: function (t) {
+              n.slotId$.next(t)
             },
-            get allCount() {
-              return i.allCount
+            open: function () {
+              n.open$.next()
             },
-            get allCount$() {
-              return i.onUpdateAllCount()
+            close: function () {
+              n.close$.next()
             },
-            get count() {
-              return i.count
+            fetchAllCount: function (t) {
+              n.fetchAllCount$.next(t)
             },
-            get count$() {
-              return i.onUpdateCount()
+            fetchCount: function (t) {
+              n.fetchCount$.next(t)
             },
-            get elapsed() {
-              return i.elapsed
+            fetchNewComments: function (t) {
+              n.fetchNewComments$.next(t)
             },
-            get elapsed$() {
-              return i.onUpdateElapsed()
+            fetchPastComments: function (t) {
+              n.fetchPastComments$.next(t)
             },
-            get currentPosition() {
-              return i.currentPosition
+            updateCommentFilter: function (t) {
+              n.updateCommentFilter$.next(t)
             },
-            get currentPosition$() {
-              return i.onUpdateCurrentPosition()
+            putElapsed: function (t) {
+              n.putElapsed$.next(t)
             },
-            get comments() {
-              return i.comments
+            clearComments: function () {
+              n.clearComments$.next()
             },
-            get comments$() {
-              return i.onUpdateComments()
+            seek: function () {
+              n.seek$.next()
             },
-            get allCountError() {
-              return i.allCountError
+            changePlaying: function (t) {
+              n.changePlaying$.next(t)
             },
-            get allCountError$() {
-              return i.onUpdateCountError()
+            putCurrentPosition: function (t) {
+              n.putCurrentPosition$.next(t)
             },
-            get countError() {
-              return i.countError
-            },
-            get countError$() {
-              return i.onUpdateCountError()
-            },
-            get commentsError() {
-              return i.commentsError
-            },
-            get commentsError$() {
-              return i.onUpdateCommentsError()
+            clearCommentCount: function () {
+              n.clearCommentCount$.next()
             }
           }),
-          this._playerObserver = t
+          this._repo = new w({
+            blockUserIdList: (g.fD.get(k.ZX) || "").split(","),
+            slotId: null,
+            comments: [],
+            allCount: 0,
+            count: 0,
+            elapsed: null,
+            currentPosition: 0,
+            allCountError: 0,
+            countError: 0,
+            commentsError: 0
+          }),
+          this._store = (r = this._repo,
+          {
+            get slotId() {
+              return r.slotId
+            },
+            get slotId$() {
+              return r.onUpdateSlotId()
+            },
+            get allCount() {
+              return r.allCount
+            },
+            get allCount$() {
+              return r.onUpdateAllCount()
+            },
+            get count() {
+              return r.count
+            },
+            get count$() {
+              return r.onUpdateCount()
+            },
+            get elapsed() {
+              return r.elapsed
+            },
+            get elapsed$() {
+              return r.onUpdateElapsed()
+            },
+            get currentPosition() {
+              return r.currentPosition
+            },
+            get currentPosition$() {
+              return r.onUpdateCurrentPosition()
+            },
+            get comments() {
+              return r.comments
+            },
+            get comments$() {
+              return r.onUpdateComments()
+            },
+            get allCountError() {
+              return r.allCountError
+            },
+            get allCountError$() {
+              return r.onUpdateCountError()
+            },
+            get countError() {
+              return r.countError
+            },
+            get countError$() {
+              return r.onUpdateCountError()
+            },
+            get commentsError() {
+              return r.commentsError
+            },
+            get commentsError$() {
+              return r.onUpdateCommentsError()
+            }
+          }),
+          this._playerObserver = e
       }
-      destroy() {
-        const t = this._subscription;
-        if (!t)
-          throw new TypeError(n.i$);
-        t.unsubscribe(),
-          this._subscription = null
-      }
-      activate() {
-        if (null !== this._subscription)
-          throw new TypeError(n.A$);
-        var t, e, i, r;
-        this._subscription = (t = this._intent,
-          e = this._gateway,
-          i = this._repo,
-          r = this._playerObserver,
-          new l(t, e, i, r).activate())
-      }
-      get intent() {
-        return this._intent
-      }
-      get store() {
-        return this._store
-      }
-    }
+      return (0,
+        r._)(t, [{
+          key: "destroy",
+          value: function () {
+            var t = this._subscription;
+            if (!t)
+              throw TypeError(a.i$);
+            t.unsubscribe(),
+              this._subscription = null
+          }
+        }, {
+          key: "activate",
+          value: function () {
+            var t, e;
+            if (null !== this._subscription)
+              throw TypeError(a.A$);
+            this._subscription = (t = this._intent,
+              e = this._gateway,
+              new v(t, e, this._repo, this._playerObserver).activate())
+          }
+        }, {
+          key: "intent",
+          get: function () {
+            return this._intent
+          }
+        }, {
+          key: "store",
+          get: function () {
+            return this._store
+          }
+        }]),
+        t
+    }()
   };
 
 
@@ -995,14 +1066,14 @@
   function replaceFunction(item) {
     if (item.length === 2) {
       switch (item[0][0]) {
-        case 4999:
-          item[1][62464] = rateFunction;
+        case '477':
+          item[1][71477] = rateFunction;
           break;
-        case 2782:
-          item[1][30131] = commentsFetchFunction;
+        case '9401':
+          item[1][66090] = commentsFetchFunction;
           break;
-        case 7503:
-          item[1][97269] = archiveCommentsFetchFunction;
+        case '8044':
+          item[1][24804] = archiveCommentsFetchFunction;
           break;
       }
     }
