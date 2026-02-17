@@ -1,3 +1,8 @@
+const script = document.createElement('script');
+script.src = chrome.runtime.getURL('inline.js');
+script.async = false;
+document.documentElement.appendChild(script);
+
 let ngWordsCache;
 function setHiddenMessageMode(mode) {
   const normalizedMode = mode ?? 'hide';
@@ -27,14 +32,7 @@ window.addEventListener('new-comment', (event) => {
 });
 
 chrome.storage.local.get('playbackRates', data => {
-  const rates = data.playbackRates || [1.0, 1.3, 1.5, 1.7, 2.0];
-
-  document.documentElement.dataset.playbackRates = JSON.stringify(rates);
-
-  const script = document.createElement('script');
-  script.src = chrome.runtime.getURL('inline.js');
-  script.async = false;
-  document.documentElement.appendChild(script);
+  document.documentElement.dataset.playbackRates = JSON.stringify(data.playbackRates || [1.0, 1.3, 1.5, 1.7, 2.0]);
 });
 
 let initializedDate = 0;
