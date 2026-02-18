@@ -89,6 +89,7 @@ function setRateIcon(video, icon) {
     else
       rateTextStyle = 'font-size:9px;';
   }
+  requestAnimationFrame(() => {
   icon.children[0].innerHTML = `
   <symbol id="svg-body" viewBox="0 0 24 24">
     <g fill="currentColor" fill-rule="evenodd">
@@ -98,6 +99,7 @@ function setRateIcon(video, icon) {
   </symbol>
   <use href="#svg-body"/>
   `;
+  });
 }
 
 function setBrowserFullscreenButton() {
