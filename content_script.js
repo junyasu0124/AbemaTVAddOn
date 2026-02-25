@@ -624,6 +624,10 @@ function getUserId(comment) {
   if (index !== -1) {
     const userId = comments[index].userId;
     comments.splice(index, 1);
+
+    if (comments.length > 1000)
+      comments.splice(0, comments.length - 1000);
+
     return userId;
   }
   return null;
