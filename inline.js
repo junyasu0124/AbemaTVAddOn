@@ -6,7 +6,7 @@
     if (this && this.length > 0 && typeof this[0] === 'object' && this[0] !== null) {
       if ('userId' in this[0] && 'message' in this[0]) {
         this.forEach(item => {
-          window.dispatchEvent(new CustomEvent("new-comment", { detail: item }));
+          window.dispatchEvent(new CustomEvent('new-comment', { detail: item }));
         });
       }
     }
@@ -16,7 +16,7 @@
   const originalFreeze = Object.freeze;
   Object.freeze = function (obj) {
     if (obj && typeof obj === 'object' && '_userId' in obj && '_message' in obj) {
-      window.dispatchEvent(new CustomEvent("new-comment", {
+      window.dispatchEvent(new CustomEvent('new-comment', {
         detail: {
           userId: obj._userId,
           message: obj._message,
