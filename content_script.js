@@ -380,8 +380,22 @@ function setNGCommentsRemoval() {
         let list, listObserver;
         for (const mutation of mutationsList) {
           mutation.addedNodes.forEach(async (node) => {
+            const onReachTop = node.querySelector('.com-tv-CommentArea>.com-a-OnReachTop');
             const target = node.querySelector('.com-tv-CommentArea>.com-a-OnReachTop>div');
-            if (target !== null) {
+            if (onReachTop !== null && target !== null) {
+              const onReachTopObserver = new MutationObserver((mutationsList) => {
+                for (const mutation of mutationsList) {
+                  mutation.addedNodes.forEach(async (addedNode) => {
+                    if (addedNode.tagName === 'DIV' && addedNode.parentElement === onReachTop)
+                      await observeList(addedNode);
+                  });
+                }
+              });
+              onReachTopObserver.observe(onReachTop, { childList: true });
+
+              await observeList(target);
+
+              async function observeList(target) {
               list = target;
               const ngWords = await getNgWords();
               removeNgWords(list.children, ngWords);
@@ -397,6 +411,7 @@ function setNGCommentsRemoval() {
                 }
               });
               listObserver.observe(list, { childList: true });
+            }
             }
           });
         }
