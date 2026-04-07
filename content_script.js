@@ -90,15 +90,15 @@ function setRateIcon(video, icon) {
       rateTextStyle = 'font-size:9px;';
   }
   requestAnimationFrame(() => {
-  icon.children[0].innerHTML = `
-  <symbol id="svg-body" viewBox="0 0 24 24">
-    <g fill="currentColor" fill-rule="evenodd">
-    <text xmlns="http://www.w3.org/2000/svg" style="font-size:10.5px;${rateTextStyle}font-weight:bold;font-family:sans-serif;" x="12" y="22" text-anchor="middle">${rateText}x</text>
-    <path d="m11.574 6.728-5.16 3.611c-.6.409-1.414-.008-1.414-.727v-7.224c0-.719.814-1.136 1.413-.728l5.161 3.621c.501.346.501 1.092 0 1.447zm1.476 2.884v-7.224c0-.719.814-1.136 1.413-.719l5.161 3.612c.501.346.501 1.092 0 1.447l-5.16 3.611c-.6.409-1.414-.008-1.414-.727z"/>
-    </g>
-  </symbol>
-  <use href="#svg-body"/>
-  `;
+    icon.children[0].innerHTML = `
+    <symbol id="svg-body" viewBox="0 0 24 24">
+      <g fill="currentColor" fill-rule="evenodd">
+      <text xmlns="http://www.w3.org/2000/svg" style="font-size:10.5px;${rateTextStyle}font-weight:bold;font-family:sans-serif;" x="12" y="22" text-anchor="middle">${rateText}x</text>
+      <path d="m11.574 6.728-5.16 3.611c-.6.409-1.414-.008-1.414-.727v-7.224c0-.719.814-1.136 1.413-.728l5.161 3.621c.501.346.501 1.092 0 1.447zm1.476 2.884v-7.224c0-.719.814-1.136 1.413-.719l5.161 3.612c.501.346.501 1.092 0 1.447l-5.16 3.611c-.6.409-1.414-.008-1.414-.727z"/>
+      </g>
+    </symbol>
+    <use href="#svg-body"/>
+    `;
   });
 }
 
@@ -117,7 +117,7 @@ function setBrowserFullscreenButton() {
         });
       }
       const header = document.querySelector('.c-common-HeaderContainer-header');
-      const sideNavigation = document.querySelector('.c-application-SideNavigation');
+      const sideNavigation = document.querySelector('.com-application-SideNavigation');
       let fullscreenButton = getFullscreenButton();
       let browserFullscreenButton;
       if (fullscreenButton) {
@@ -141,11 +141,11 @@ function setBrowserFullscreenButton() {
           if (containerView.style.position === 'fixed' && (miniPlayerWrapper.classList.contains('com-vod-VODMiniPlayerWrapper__player--bg') === false || miniPlayerWrapper.classList.contains('com-vod-VODMiniPlayerWrapper__player--bg-mini') === false)) {
             clearTimeout(pointerMoveTimeoutId);
             header.classList.remove('c-common-HeaderContainer-header--hidden');
-            sideNavigation.classList.remove('c-application-SideNavigation--hidden');
+            sideNavigation.classList.remove('com-application-SideNavigation--hidden');
             pointerMoveTimeoutId = setTimeout(() => {
               if (containerView.style.position === 'fixed' && isPointerInHeaderOrSideNavigation === false && (miniPlayerWrapper.classList.contains('com-vod-VODMiniPlayerWrapper__player--bg') === false || miniPlayerWrapper.classList.contains('com-vod-VODMiniPlayerWrapper__player--bg-mini') === false)) {
                 header.classList.add('c-common-HeaderContainer-header--hidden');
-                sideNavigation.classList.add('c-application-SideNavigation--hidden');
+                sideNavigation.classList.add('com-application-SideNavigation--hidden');
               }
             }, 4000);
           }
@@ -155,17 +155,17 @@ function setBrowserFullscreenButton() {
             if (containerView.style.position === 'fixed' && isPointerInHeaderOrSideNavigation === false && (miniPlayerWrapper.classList.contains('com-vod-VODMiniPlayerWrapper__player--bg') === false || miniPlayerWrapper.classList.contains('com-vod-VODMiniPlayerWrapper__player--bg-mini') === false)) {
               clearTimeout(pointerMoveTimeoutId);
               header.classList.add('c-common-HeaderContainer-header--hidden');
-              sideNavigation.classList.add('c-application-SideNavigation--hidden');
+              sideNavigation.classList.add('com-application-SideNavigation--hidden');
             }
           }, 100);
         });
         if (document.getElementById('browser-fullscreen-style') === null) {
           document.head.firstChild.insertAdjacentHTML('afterend', `
           <style id="browser-fullscreen-style">
-            .c-common-HeaderContainer-header, .c-application-SideNavigation {
+            .c-common-HeaderContainer-header, .com-application-SideNavigation {
               transition: opacity .2s, visibility 0s 0s;
             }
-            .c-common-HeaderContainer-header--hidden, .c-application-SideNavigation--hidden {
+            .c-common-HeaderContainer-header--hidden, .com-application-SideNavigation--hidden {
               opacity: 0;
               visibility: hidden;
               pointer-events: none;
@@ -185,7 +185,7 @@ function setBrowserFullscreenButton() {
               const isBrowserFullscreen = containerView.style.position === 'fixed';
               if (isBg === true && isMini === true) { // mini
                 header.classList.remove('c-common-HeaderContainer-header--hidden');
-                sideNavigation.classList.remove('c-application-SideNavigation--hidden');
+                sideNavigation.classList.remove('com-application-SideNavigation--hidden');
                 isPreviousMini = true;
                 return;
               } else if (isBg === true && isMini === false) { // normal
@@ -193,7 +193,7 @@ function setBrowserFullscreenButton() {
                   browserFullscreenButton.style.display = 'flex';
                 if (isBrowserFullscreen === true) {
                   header.classList.add('c-common-HeaderContainer-header--hidden');
-                  sideNavigation.classList.add('c-application-SideNavigation--hidden');
+                  sideNavigation.classList.add('com-application-SideNavigation--hidden');
                 }
                 if (document.querySelector('.com-vod-BrowserFullscreen') === null) {
                   rightControlBar = document.querySelector('.com-vod-VideoControlBar__right');
@@ -266,7 +266,7 @@ function setBrowserFullscreenButton() {
             if (playerContainer.style.position === 'fixed') {
               playerContainer.style.position = '';
               header.classList.remove('c-common-HeaderContainer-header--hidden');
-              sideNavigation.classList.remove('c-application-SideNavigation--hidden');
+              sideNavigation.classList.remove('com-application-SideNavigation--hidden');
               browserFullscreenButton.querySelector('.com-vod-BrowserFullscreen-icon-enter').style.display = '';
               browserFullscreenButton.querySelector('.com-vod-BrowserFullscreen-icon-exit').style.display = 'none';
               Array.from(rightControlBar.children).forEach((node) => {
@@ -276,7 +276,7 @@ function setBrowserFullscreenButton() {
             } else {
               playerContainer.style.position = 'fixed';
               header.classList.add('c-common-HeaderContainer-header--hidden');
-              sideNavigation.classList.add('c-application-SideNavigation--hidden');
+              sideNavigation.classList.add('com-application-SideNavigation--hidden');
               browserFullscreenButton.querySelector('.com-vod-BrowserFullscreen-icon-enter').style.display = 'none';
               browserFullscreenButton.querySelector('.com-vod-BrowserFullscreen-icon-exit').style.display = '';
               Array.from(rightControlBar.children).forEach((node) => {
@@ -396,22 +396,22 @@ function setNGCommentsRemoval() {
               await observeList(target);
 
               async function observeList(target) {
-              list = target;
-              const ngWords = await getNgWords();
-              removeNgWords(list.children, ngWords);
-              setUserIdToComments(list.children);
-              listObserver = new MutationObserver((mutationsList) => {
-                for (const mutation of mutationsList) {
-                  mutation.addedNodes.forEach(async (addedNode) => {
-                    const comment = addedNode.children[0]?.children[0]?.children[0]?.textContent;
-                    const ngWords = await getNgWords();
-                    setNgWordStyle(addedNode, isContainsNgWord(comment, ngWords), ngWords);
-                    setUserIdStyle(addedNode, getUserId(comment));
-                  });
-                }
-              });
-              listObserver.observe(list, { childList: true });
-            }
+                list = target;
+                const ngWords = await getNgWords();
+                removeNgWords(list.children, ngWords);
+                setUserIdToComments(list.children);
+                listObserver = new MutationObserver((mutationsList) => {
+                  for (const mutation of mutationsList) {
+                    mutation.addedNodes.forEach(async (addedNode) => {
+                      const comment = addedNode.children[0]?.children[0]?.children[0]?.textContent;
+                      const ngWords = await getNgWords();
+                      setNgWordStyle(addedNode, isContainsNgWord(comment, ngWords), ngWords);
+                      setUserIdStyle(addedNode, getUserId(comment));
+                    });
+                  }
+                });
+                listObserver.observe(list, { childList: true });
+              }
             }
           });
         }
@@ -596,8 +596,8 @@ function setUserIdStyle(child, userId) {
     if (document.documentElement.hasAttribute('data-user-id-inline-display')) {
       child.removeAttribute('title');
     } else {
-    child.title = userId;
-}
+      child.title = userId;
+    }
     const userIdSpan = document.createElement('span');
     userIdSpan.className = 'com-a-Text--user-id';
     userIdSpan.textContent = userId;
@@ -632,3 +632,8 @@ function getUserId(comment) {
   }
   return null;
 }
+
+// TODO: User IDの表示に関する設定ページを作る（インライン表示の有無（変更されたら反映させる（Title属性に注意））・フォントサイズの設定を含める）
+// TODO: User IDごとのコメント回数を表示するオプションを追加する
+// TODO: User IDを短く分かりやすい形式に置き換えたIDを表示するオプションを追加する（User IDとIDの紐づけをDBに保存しておけば再読み込みしても変わらない）
+// TODO: 設定のインポート/エクスポート機能を追加する
