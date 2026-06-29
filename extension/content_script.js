@@ -20,6 +20,8 @@ function getNgWords() {
         ngWordsCache = data.ngWords;
         if (ngWordsCache !== undefined)
           setHiddenMessageMode(getHiddenMessageMode(ngWordsCache));
+        else
+          ngWordsCache = { text: [], regex: [], hiddenMessageMode: 'hide' };
         resolve(ngWordsCache);
       });
     }
