@@ -57,11 +57,29 @@ function initialize() {
   if (now - initializedDate < 500)
     return;
   initializedDate = now;
+  setRateButtonClickEvent();
   setVideoPlaybackRateChangeEvent();
   setBrowserFullscreenButton();
   setNGCommentsRemoval();
 }
 
+function setRateButtonClickEvent() {
+  const id = setInterval(() => {
+    const rateButtons = document.querySelectorAll('.com-vod-VODSettingsBlock__check-item');
+    if (rateButtons.length > 0) {
+      clearInterval(id);
+      rateButtons.forEach((button) => {
+        button.onclick = (event) => {
+          event.stopPropagation();
+          const rate = parseFloat(button.textContent);
+          const video = document.querySelector('video');
+          if (video)
+            video.playbackRate = rate;
+        };
+      });
+    }
+  }, 300);
+}
 function setVideoPlaybackRateChangeEvent() {
   const id = setInterval(() => {
     const video = document.querySelector('video');
@@ -78,10 +96,15 @@ function setVideoPlaybackRateChangeEvent() {
 }
 function setRateIcon(video, icon) {
   let rateText = '', rateTextStyle = '';
-  if (Number.isInteger(video.playbackRate)) {
-    rateText = video.playbackRate.toString();
+  let descriptor = Object.getOwnPropertyDescriptor(
+    HTMLMediaElement.prototype,
+    "playbackRate"
+  );
+  const playbackRate = descriptor.get.call(video);
+  if (Number.isInteger(playbackRate)) {
+    rateText = playbackRate.toString();
   } else {
-    rateText = video.playbackRate.toFixed(2);
+    rateText = playbackRate.toFixed(2);
     if (rateText.endsWith('.00'))
       rateText = rateText.slice(0, -3);
     else if (rateText.endsWith('0'))
@@ -89,6 +112,15 @@ function setRateIcon(video, icon) {
     else
       rateTextStyle = 'font-size:9px;';
   }
+
+  document.querySelectorAll('.com-vod-VODSettingsBlock__check-item').forEach((button) => {
+    const buttonRate = parseFloat(button.textContent);
+    if (buttonRate === playbackRate)
+      button.firstElementChild.classList.add('com-a-RadioButton--checked');
+    else
+      button.firstElementChild.classList.remove('com-a-RadioButton--checked');
+  });
+
   requestAnimationFrame(() => {
     icon.children[0].innerHTML = `
     <symbol id="svg-body" viewBox="0 0 24 24">

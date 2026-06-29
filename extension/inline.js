@@ -47,4 +47,23 @@
   function setPlaybackRates() {
     playbackRates = Array.from(new Set(JSON.parse(document.documentElement.dataset.playbackRates ?? '[1.0,1.3,1.5,1.7,2.0]'))).sort((a, b) => a - b);
   }
+
+  const defaultPlaybackRates = [1.0, 1.3, 1.5, 1.7, 2.0];
+  let video = document.querySelector('video');
+  let descriptor = Object.getOwnPropertyDescriptor(
+    HTMLMediaElement.prototype,
+    "playbackRate"
+  );
+  Object.defineProperty(HTMLVideoElement.prototype, 'playbackRate', {
+    get() {
+      const rate = descriptor.get.call(this);
+      if (defaultPlaybackRates.includes(rate))
+        return rate;
+      else
+        return 1;
+    },
+    set(value) {
+      descriptor.set.call(this, value);
+    }
+  });
 })();
