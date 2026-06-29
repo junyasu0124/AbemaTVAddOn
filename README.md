@@ -11,11 +11,10 @@ Chrome用拡張機能です。AbemaTVに便利な機能を追加します
 ## インストール方法
 1. 「[Releases](https://github.com/junyasu0124/AbemaTVAddOn/releases/)」から最新バージョンのファイルをダウンロード
 1. ダウンロードしたファイルを展開
-1. 展開されたフォルダからファイル`_config.yml`を削除
 1. Chromeで「[chrome://extensions/](chrome://extensions/)」に移動
 1. 右上の「デベロッパーモード」を有効にする
 1. 「パッケージ化されていない拡張機能を読み込む」をクリック
-1. 2で展開されたフォルダーを選択
+1. 2で展開されたフォルダー内の`extension`フォルダーを選択
 1. AbemaTVを開いているタブを再読み込み
 
 ## 使い方
