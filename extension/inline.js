@@ -49,7 +49,6 @@
   }
 
   const defaultPlaybackRates = [1.0, 1.3, 1.5, 1.7, 2.0];
-  let video = document.querySelector('video');
   let descriptor = Object.getOwnPropertyDescriptor(
     HTMLMediaElement.prototype,
     "playbackRate"
