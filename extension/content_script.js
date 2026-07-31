@@ -119,7 +119,7 @@ function setRateIcon(video, icon) {
   let rateText = '', rateTextStyle = '';
   let descriptor = Object.getOwnPropertyDescriptor(
     HTMLMediaElement.prototype,
-    "playbackRate"
+    'playbackRate'
   );
   const playbackRate = descriptor.get.call(video);
   if (Number.isInteger(playbackRate)) {

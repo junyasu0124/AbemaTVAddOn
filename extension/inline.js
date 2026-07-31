@@ -27,26 +27,26 @@
           message: obj._message,
         }
       }));
-        }
+    }
     return originalFreeze.apply(this, arguments);
   };
 
   const originalDefineProperty = Object.defineProperty;
   Object.defineProperty = function (obj, prop, descriptor) {
     if (prop === 'K' && descriptor && descriptor.value && descriptor.value.length === defaultPlaybackRates.length && descriptor.value[0] === defaultPlaybackRates[0] && descriptor.value[1] === defaultPlaybackRates[1] && descriptor.value[2] === defaultPlaybackRates[2] && descriptor.value[3] === defaultPlaybackRates[3] && descriptor.value[4] === defaultPlaybackRates[4]) {
-        if (playbackRates === undefined)
-          setPlaybackRates();
+      if (playbackRates === undefined)
+        setPlaybackRates();
       return originalDefineProperty.call(this, obj, prop, {
         ...descriptor,
         value: playbackRates ?? defaultPlaybackRates
       });
-  }
+    }
     return originalDefineProperty.call(this, obj, prop, descriptor);
   };
 
   let descriptor = Object.getOwnPropertyDescriptor(
     HTMLMediaElement.prototype,
-    "playbackRate"
+    'playbackRate'
   );
   Object.defineProperty(HTMLVideoElement.prototype, 'playbackRate', {
     get() {
