@@ -67,10 +67,29 @@ function initialize() {
 
 function setRateButtonClickEvent() {
   const id = setInterval(() => {
+    const playerContainer = document.querySelector('.c-tv-TimeshiftPlayerContainerView');
     const rateButtons = document.querySelectorAll('.com-vod-VODSettingsBlock__check-item');
-    if (rateButtons.length > 0) {
+    if (playerContainer !== null && rateButtons.length > 0) {
       clearInterval(id);
-      rateButtons.forEach((button) => {
+      const video = document.querySelector('video');
+      const icon = document.querySelector('.com-vod-VideoControlPlaybackRate__icon');
+      const onReachTopObserver = new MutationObserver((mutationsList) => {
+        for (const mutation of mutationsList) {
+          mutation.addedNodes.forEach((addedNode) => {
+            if (addedNode.parentElement === playerContainer && addedNode.classList.contains('com-vod-VideoControlBar')) {
+              setVideoPlaybackRateChangeEvent();
+              setRateIcon(video, icon);
+
+              document.querySelectorAll('.com-vod-VODSettingsBlock__check-item').forEach(setOnClick);
+            }
+          });
+        }
+      });
+      onReachTopObserver.observe(playerContainer, { childList: true });
+
+      rateButtons.forEach(setOnClick);
+
+      function setOnClick(button) {
         button.onclick = (event) => {
           event.stopPropagation();
           const rate = parseFloat(button.textContent);
@@ -78,7 +97,7 @@ function setRateButtonClickEvent() {
           if (video)
             video.playbackRate = rate;
         };
-      });
+      }
     }
   }, 300);
 }

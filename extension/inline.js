@@ -1,5 +1,10 @@
 (() => {
+  const defaultPlaybackRates = [1.0, 1.3, 1.5, 1.7, 2.0];
   let playbackRates = undefined;
+
+  function setPlaybackRates() {
+    playbackRates = document.documentElement.dataset.playbackRates ? Array.from(new Set(JSON.parse(document.documentElement.dataset.playbackRates))).sort((a, b) => a - b) : defaultPlaybackRates;
+  }
 
   const originalReverse = Array.prototype.reverse;
   Array.prototype.reverse = function () {
@@ -22,33 +27,23 @@
           message: obj._message,
         }
       }));
-    } else if (obj.length === 5 && obj[0] === 1 && obj[1] === 1.3 && obj[2] === 1.5 && obj[3] === 1.7 && obj[4] === 2) {
-      if (playbackRates === undefined)
-        setPlaybackRates();
-      return playbackRates;
-    }
+        }
     return originalFreeze.apply(this, arguments);
   };
 
-  const originalHasOwnProperty = Object.prototype.hasOwnProperty;
-  Object.prototype.hasOwnProperty = function (prop) {
-    if (this && this.height === undefined && originalHasOwnProperty.call(this, 'aria-label') && this['aria-label'].endsWith && this['aria-label'].endsWith('x')) {
-      if (this.symbolType === undefined) {
+  const originalDefineProperty = Object.defineProperty;
+  Object.defineProperty = function (obj, prop, descriptor) {
+    if (prop === 'K' && descriptor && descriptor.value && descriptor.value.length === defaultPlaybackRates.length && descriptor.value[0] === defaultPlaybackRates[0] && descriptor.value[1] === defaultPlaybackRates[1] && descriptor.value[2] === defaultPlaybackRates[2] && descriptor.value[3] === defaultPlaybackRates[3] && descriptor.value[4] === defaultPlaybackRates[4]) {
         if (playbackRates === undefined)
           setPlaybackRates();
-        const rate = parseFloat(this['aria-label']);
-        if (playbackRates.includes(rate)) {
-          this.symbolType = 'ICONS_CONDITION_FAST_FORWARD_1X';
-        }
-      }
-    }
-    return originalHasOwnProperty.call(this, prop);
-  };
-  function setPlaybackRates() {
-    playbackRates = Array.from(new Set(JSON.parse(document.documentElement.dataset.playbackRates ?? '[1.0,1.3,1.5,1.7,2.0]'))).sort((a, b) => a - b);
+      return originalDefineProperty.call(this, obj, prop, {
+        ...descriptor,
+        value: playbackRates ?? defaultPlaybackRates
+      });
   }
+    return originalDefineProperty.call(this, obj, prop, descriptor);
+  };
 
-  const defaultPlaybackRates = [1.0, 1.3, 1.5, 1.7, 2.0];
   let descriptor = Object.getOwnPropertyDescriptor(
     HTMLMediaElement.prototype,
     "playbackRate"
