@@ -61,4 +61,27 @@
       descriptor.set.call(this, value);
     }
   });
+
+  window.addEventListener('settings-changed', (event) => {
+    const data = event.detail;
+    try {
+      const jsonData = JSON.stringify(data);
+      localStorage.setItem('abema-tv-addon-settings', jsonData);
+    } catch (error) {
+      console.error('Failed to save settings to localStorage:', error);
+    }
+  });
+  window.addEventListener('load-settings', () => {
+    try {
+      const jsonData = localStorage.getItem('abema-tv-addon-settings');
+      if (jsonData) {
+        const data = JSON.parse(jsonData);
+        window.dispatchEvent(new CustomEvent('settings-loaded', { detail: data }));
+      }
+    } catch (error) {
+      console.error('Failed to load settings from localStorage:', error);
+    }
+  });
+
+  window.dispatchEvent(new CustomEvent('inline-script-loaded'));
 })();

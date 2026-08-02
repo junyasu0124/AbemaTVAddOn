@@ -86,6 +86,9 @@ chrome.runtime.onMessage.addListener((message) => {
     case 'TAB_UPDATED':
       initialize();
       break;
+    case 'SETTINGS_CHANGED':
+      saveSettingsInLocalStorage();
+      break;
     case 'NG_WORDS_UPDATED':
       ngWordsUpdated();
       break;
@@ -93,6 +96,19 @@ chrome.runtime.onMessage.addListener((message) => {
       userIdInlineDisplayChanged();
       break;
   }
+});
+
+window.addEventListener('inline-script-loaded', (event) => {
+  chrome.storage.local.get('isFirstRun', data => {
+    if (data.isFirstRun === undefined) {
+      chrome.storage.local.set({ isFirstRun: false });
+      window.addEventListener('settings-loaded', (event) => {
+        chrome.storage.local.set(event.detail);
+        location.reload();
+      });
+      window.dispatchEvent(new CustomEvent('load-settings'));
+    }
+  });
 });
 
 initialize();
@@ -106,6 +122,14 @@ function initialize() {
   setVideoPlaybackRateChangeEvent();
   setBrowserFullscreenButton();
   setNGCommentsRemoval();
+}
+
+function saveSettingsInLocalStorage() {
+  chrome.storage.local.get(['playbackRates', 'ngWords', 'continuousComment', 'userIdInlineDisplay'], data => {
+    window.dispatchEvent(new CustomEvent('settings-changed', {
+      detail: data
+    }));
+  });
 }
 
 function setRateButtonClickEvent() {

@@ -2,6 +2,12 @@ const defaultRates = [1.0, 1.3, 1.5, 1.7, 2.0];
 
 const tabs = document.getElementById('tabs');
 
+chrome.storage.local.get('isFirstRun', data => {
+  if (data.isFirstRun === undefined) {
+    document.body.innerHTML = '<div>AbemaTVを一度開く（再読み込みする）と<br>設定が表示されます</div>';
+  }
+});
+
 tabs.addEventListener('click', event => {
   const tab = event.target.closest('.tab');
   if (!tab) return;
@@ -332,7 +338,11 @@ function dispatchMessage(message) {
     tabs.forEach(tab => {
       chrome.tabs.sendMessage(tab.id, message);
     });
+    chrome.tabs.sendMessage(tabs[0].id, 'SETTINGS_CHANGED');
   });
 }
 function dispatchSettingsChanged() {
+  chrome.tabs.query({ url: 'https://abema.tv/*', discarded: false }, (tabs) => {
+    chrome.tabs.sendMessage(tabs.sort((a, b) => b.lastAccessed - a.lastAccessed)[0].id, 'SETTINGS_CHANGED');
+  });
 }
