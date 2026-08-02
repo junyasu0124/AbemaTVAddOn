@@ -29,8 +29,51 @@ function getNgWords() {
 }
 
 const comments = [];
-window.addEventListener('new-comment', (event) => {
-  comments.push(event.detail);
+let recentComments = [];
+const userIdsOfContinuousComment = new Set();
+chrome.storage.local.get('continuousComment', data => {
+  const continuousComment = data.continuousComment ?? { enable: false, conditions: [] };
+  if (continuousComment.enable && document.getElementById('continuous-comment-style') === null) {
+    document.head.firstChild.insertAdjacentHTML('afterend', `
+    <style id="continuous-comment-style">
+      .com-tv-CommentBlock>.com-tv-CommentBlock__inner.continuous-comment, .com-archive-comment-ArchiveCommentItem.continuous-comment {
+        display: none;
+      }
+    </style>
+    `);
+  }
+  const maxSeconds = Math.max(...continuousComment.conditions.map(condition => condition.seconds));
+  window.addEventListener('new-comment', (event) => {
+    comments.push(event.detail);
+    if (continuousComment.enable) {
+      const now = event.detail.createdAtMs ?? Infinity;
+      recentComments = recentComments.filter(comment => Math.abs(now - comment.createdAtMs) <= maxSeconds * 1000);
+
+      let added = false;
+      for (const condition of continuousComment.conditions) {
+        const a = recentComments.filter(comment => comment.userId === event.detail.userId && now !== comment.createdAtMs && Math.abs(now - comment.createdAtMs) <= condition.seconds * 1000 && comment.message.length >= condition.messageLength);
+        if (a.length >= condition.count - 1) {
+          added = true;
+          userIdsOfContinuousComment.add(event.detail.userId);
+        }
+      }
+
+      if (recentComments.find(comment => comment.userId === event.detail.userId && now === comment.createdAtMs) === undefined)
+        recentComments.push(event.detail);
+
+      if (added) {
+        const list = document.querySelector('.com-tv-CommentArea>.com-a-OnReachTop>div') ?? document.querySelector('.c-archive-comment-ArchiveCommentContainerView__list-wrapper>.com-a-OnReachTop>ul');
+        if (list) {
+          for (const element of list.children) {
+            const userId = element.querySelector('.com-a-Text--user-id')?.textContent;
+            if (userIdsOfContinuousComment.has(userId)) {
+              element.firstElementChild.classList.add('continuous-comment');
+            }
+          }
+        }
+      }
+    }
+  });
 });
 
 chrome.storage.local.get('playbackRates', data => {
@@ -459,7 +502,7 @@ function setNGCommentsRemoval() {
                       const comment = addedNode.children[0]?.children[0]?.children[0]?.textContent;
                       const ngWords = await getNgWords();
                       setNgWordStyle(addedNode, isContainsNgWord(comment, ngWords), ngWords);
-                      setUserIdStyle(addedNode, getUserId(comment));
+                      setCommentStyle(addedNode, getUserId(comment));
                     });
                   }
                 });
@@ -490,7 +533,7 @@ function setNGCommentsRemoval() {
                     const comment = addedNode.children[0]?.children[0]?.children[0]?.textContent;
                     const ngWords = await getNgWords();
                     setNgWordStyle(addedNode, isContainsNgWord(comment, ngWords), ngWords);
-                    setUserIdStyle(addedNode, getUserId(comment));
+                    setCommentStyle(addedNode, getUserId(comment));
                   });
                 }
               });
@@ -641,15 +684,18 @@ function isContainsNgWord(comment, ngWords) {
 function setUserIdToComments(children) {
   for (const child of children) {
     const comment = child.children[0]?.children[0]?.children[0]?.textContent;
-    setUserIdStyle(child, getUserId(comment));
+    setCommentStyle(child, getUserId(comment));
   }
 }
-function setUserIdStyle(child, userId) {
+function setCommentStyle(child, userId) {
   if (userId !== null) {
     if (document.documentElement.hasAttribute('data-user-id-inline-display')) {
       child.removeAttribute('title');
     } else {
       child.title = userId;
+    }
+    if (userIdsOfContinuousComment.has(userId)) {
+      child.firstElementChild.classList.add('continuous-comment');
     }
     const userIdSpan = document.createElement('span');
     userIdSpan.className = 'com-a-Text--user-id';

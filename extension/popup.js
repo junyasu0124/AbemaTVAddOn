@@ -21,6 +21,11 @@ const ngWordTemplate = document.getElementById('ngWordTemplate');
 const addNgWordButton = document.getElementById('addNgWord');
 const saveNgWordListButton = document.getElementById('saveNgWordList');
 const hiddenMessageModeRadios = document.querySelectorAll('input[name="hiddenMessageMode"]');
+const continuousCommentHideCheckbox = document.getElementById('continuousCommentHide');
+const continuousCommentConditionListContainer = document.getElementById('continuousCommentConditionListContainer');
+const continuousCommentConditionList = document.getElementById('continuousCommentConditionList');
+const continuousCommentConditionTemplate = document.getElementById('continuousCommentConditionTemplate');
+const addContinuousCommentConditionButton = document.getElementById('addContinuousCommentCondition');
 const userIdInlineDisplayCheckbox = document.getElementById('userIdInlineDisplay');
 
 function createNgWordItem(value = '', isRegex = false) {
@@ -102,9 +107,7 @@ function saveNgWords() {
   const selectedMode = Array.from(hiddenMessageModeRadios).find(radio => radio.checked);
   ngWords.hiddenMessageMode = selectedMode ? selectedMode.value : 'hide';
   chrome.storage.local.set({ ngWords: ngWords });
-  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    chrome.tabs.sendMessage(tabs[0].id, 'NG_WORDS_UPDATED');
-  });
+  dispatchMessage('NG_WORDS_UPDATED');
   saveNgWordListButton.disabled = true;
 }
 
@@ -125,23 +128,125 @@ hiddenMessageModeRadios.forEach(radio => {
         data.ngWords = { text: [], regex: [] };
       data.ngWords.hiddenMessageMode = selectedMode ? selectedMode.value : 'hide';
       chrome.storage.local.set({ ngWords: data.ngWords });
-      chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-        chrome.tabs.sendMessage(tabs[0].id, 'NG_WORDS_UPDATED');
-      });
+      dispatchMessage('NG_WORDS_UPDATED');
     });
   });
 });
 
 loadNgWords();
 
+const defaultContinuousCommentConditions = [
+  { seconds: 60, count: 6, messageLength: 8 },
+  { seconds: 60, count: 4, messageLength: 15 },
+  { seconds: 20, count: 3, messageLength: 12 },
+];
+function createContinuousCommentConditionItem(seconds, count, messageLength) {
+  const clone = continuousCommentConditionTemplate.content.cloneNode(true);
+  const item = clone.querySelector('.item');
+  const secondsInput = clone.querySelector('.seconds');
+  const countInput = clone.querySelector('.count');
+  const messageLengthInput = clone.querySelector('.messageLength');
+  const deleteButton = clone.querySelector('.deleteButton');
+
+  if (seconds !== undefined && count !== undefined && messageLength !== undefined) {
+    secondsInput.value = seconds;
+    countInput.value = count;
+    messageLengthInput.value = messageLength;
+  }
+  secondsInput.addEventListener('input', () => {
+    const value = parseInt(secondsInput.value, 10);
+    if (!isNaN(value) && value >= 1 && value <= 600)
+      saveContinuousCommentConditions();
+  });
+  countInput.addEventListener('input', () => {
+    const value = parseInt(countInput.value, 10);
+    if (!isNaN(value) && value >= 2)
+      saveContinuousCommentConditions();
+  });
+  messageLengthInput.addEventListener('input', () => {
+    const value = parseInt(messageLengthInput.value, 10);
+    if (!isNaN(value) && value >= 1)
+      saveContinuousCommentConditions();
+  });
+  deleteButton.addEventListener('click', () => {
+    item.remove();
+    saveContinuousCommentConditions();
+  });
+
+  return item;
+}
+function loadContinuousCommentConditions(continuousComment) {
+  continuousCommentConditionList.innerHTML = '';
+  if (continuousComment) {
+    continuousComment.conditions.forEach(condition => {
+      const conditionItem = createContinuousCommentConditionItem(condition.seconds, condition.count, condition.messageLength);
+      continuousCommentConditionList.appendChild(conditionItem);
+    });
+  }
+}
+function saveContinuousCommentConditions() {
+  const conditions = [];
+  continuousCommentConditionList.querySelectorAll('.item').forEach(item => {
+    const secondsInput = item.querySelector('.seconds');
+    const countInput = item.querySelector('.count');
+    const messageLengthInput = item.querySelector('.messageLength');
+    const seconds = parseInt(secondsInput.value, 10);
+    const count = parseInt(countInput.value, 10);
+    const messageLength = parseInt(messageLengthInput.value, 10);
+    if (
+      !isNaN(seconds) &&
+      seconds >= 1 &&
+      seconds <= 600 &&
+      !isNaN(count) &&
+      count >= 2 &&
+      !isNaN(messageLength) &&
+      messageLength >= 1 &&
+      !conditions.some(condition => condition.seconds === seconds && condition.count === count && condition.messageLength === messageLength)
+    ) {
+      conditions.push({ seconds, count, messageLength });
+    }
+  });
+  chrome.storage.local.get('continuousComment', data => {
+    const continuousComment = data.continuousComment ?? { enable: false, conditions: [] };
+    continuousComment.conditions = conditions;
+    chrome.storage.local.set({ continuousComment: continuousComment });
+    dispatchSettingsChanged();
+  });
+}
+chrome.storage.local.get('continuousComment', data => {
+  const continuousComment = data.continuousComment ?? { enable: false, conditions: defaultContinuousCommentConditions };
+  continuousCommentHideCheckbox.checked = continuousComment.enable;
+  if (continuousComment.enable)
+    continuousCommentConditionListContainer.style.display = '';
+  loadContinuousCommentConditions(continuousComment);
+});
+continuousCommentHideCheckbox.addEventListener('change', () => {
+  chrome.storage.local.get('continuousComment', data => {
+    const continuousComment = data.continuousComment ?? { enable: false, conditions: defaultContinuousCommentConditions };
+    continuousComment.enable = continuousCommentHideCheckbox.checked;
+    if (continuousComment.enable)
+      continuousCommentConditionListContainer.style.display = '';
+    else
+      continuousCommentConditionListContainer.style.display = 'none';
+    chrome.storage.local.set({ continuousComment: continuousComment });
+    dispatchSettingsChanged();
+  });
+});
+addContinuousCommentConditionButton.addEventListener('click', () => {
+  const conditionItem = createContinuousCommentConditionItem();
+  continuousCommentConditionList.appendChild(conditionItem);
+  conditionItem.querySelector('.seconds').focus();
+  conditionItem.querySelector('.seconds').select();
+  saveContinuousCommentConditions();
+});
+
+
 chrome.storage.local.get('userIdInlineDisplay', data => {
   userIdInlineDisplayCheckbox.checked = data.userIdInlineDisplay ?? false;
 });
 userIdInlineDisplayCheckbox.addEventListener('change', () => {
   chrome.storage.local.set({ userIdInlineDisplay: userIdInlineDisplayCheckbox.checked });
-  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    chrome.tabs.sendMessage(tabs[0].id, 'USER_ID_INLINE_DISPLAY_CHANGED');
-  });
+  dispatchMessage('USER_ID_INLINE_DISPLAY_CHANGED');
 });
 
 const rateList = document.getElementById('rateList');
@@ -190,6 +295,7 @@ function saveRates() {
       rates.push(value);
   });
   chrome.storage.local.set({ playbackRates: rates });
+  dispatchSettingsChanged();
 }
 
 addRateButton.addEventListener('click', () => {
@@ -220,3 +326,13 @@ chrome.storage.local.get('activeTab', data => {
 });
 
 loadRates();
+
+function dispatchMessage(message) {
+  chrome.tabs.query({ url: 'https://abema.tv/*', discarded: false }, (tabs) => {
+    tabs.forEach(tab => {
+      chrome.tabs.sendMessage(tab.id, message);
+    });
+  });
+}
+function dispatchSettingsChanged() {
+}

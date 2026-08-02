@@ -78,6 +78,16 @@ button:disabled {
   cursor: default;
 }
 
+label {
+  display: flex;
+  gap: 6px;
+  line-height: 1.2;
+
+  & input {
+    margin: 0;
+  }
+}
+
 .list {
   margin: 0;
   padding: 0;
@@ -165,23 +175,27 @@ button:disabled {
   margin-top: 4px;
 }
 
-.hiddenMessageOption {
-  display: flex;
-  gap: 6px;
-  line-height: 1.2;
+#continuousCommentConditionListContainer {
+  margin-top: 8px;
 }
 
-.hiddenMessageOption input {
-  margin: 0;
+#continuousCommentConditionList {
+  .input {
+    max-width: 22px;
+  }
+
+  & li>span {
+    align-self: center;
+  }
 }
 
-.userIdSettingOptions {
-  display: flex;
-  gap: 6px;
-  line-height: 1.2;
+input[type="number"]:invalid {
+  outline: 2px solid red;
 }
 
-.userIdSettingOptions input {
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
   margin: 0;
 }
 
@@ -227,5 +241,4 @@ button:focus-visible,
 input[type="checkbox"]:focus-visible,
 input[type="radio"]:focus-visible {
   outline: 2px solid #6aa6ff;
-  outline-offset: 2px;
 }

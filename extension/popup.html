@@ -11,6 +11,7 @@
     <nav id="tabs">
       <button class="tab" data-tab="rate">速度</button>
       <button class="tab" data-tab="ngWord">NGワード</button>
+      <button class="tab" data-tab="continuousComment">連続投稿</button>
       <button class="tab" data-tab="userId">ユーザーID</button>
     </nav>
   </header>
@@ -57,6 +58,31 @@
           <input type="radio" name="hiddenMessageMode" value="replace">元のコメントの代わりに「NGワードが<br>含まれています」と表示</label>
         <label class="hiddenMessageOption">
           <input type="radio" name="hiddenMessageMode" value="mask">NGワード部分を伏字にする</label>
+      </div>
+    </section>
+
+    <section id="continuousComment" class="panel">
+      <template id="continuousCommentConditionTemplate">
+        <li class="item">
+          <input type="number" class="input seconds" step="1" min="1" max="600" value="30">
+          <span>秒間に</span>
+          <input type="number" class="input count" step="1" min="2" value="3">
+          <span>回以上</span>
+          <input type="number" class="input messageLength" step="1" min="1" value="10">
+          <span>文字以上のコメント</span>
+          <button class="deleteButton" title="削除">
+            <span></span>
+            <span></span>
+          </button>
+        </li>
+      </template>
+
+      <label class="continuousCommentSettingOptions">
+        <input type="checkbox" id="continuousCommentHide">連続投稿のコメントを非表示にする</label>
+      <div id="continuousCommentConditionListContainer" style="display: none;">
+        <div id="continuousCommentConditionListHeader">連続投稿の判定条件</div>
+        <ul id="continuousCommentConditionList" class="list"></ul>
+        <button id="addContinuousCommentCondition">追加</button>
       </div>
     </section>
 

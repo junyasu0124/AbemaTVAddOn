@@ -10,7 +10,7 @@
   Array.prototype.reverse = function () {
     if (this && this.length > 0 && typeof this[0] === 'object' && this[0] !== null) {
       if ('userId' in this[0] && 'message' in this[0]) {
-        this.forEach(item => {
+        this.toReversed().forEach(item => {
           window.dispatchEvent(new CustomEvent('new-comment', { detail: item }));
         });
       }
@@ -25,6 +25,7 @@
         detail: {
           userId: obj._userId,
           message: obj._message,
+          createdAtMs: obj._createdAtMs,
         }
       }));
     }

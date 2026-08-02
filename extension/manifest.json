@@ -4,8 +4,10 @@
   "description": "AbemaTVに便利な機能を追加する拡張機能です。",
   "version": "1.2.6",
   "permissions": [
-    "storage",
-    "activeTab"
+    "storage"
+  ],
+  "host_permissions": [
+    "https://abema.tv/*"
   ],
   "background": {
     "service_worker": "background.js"
