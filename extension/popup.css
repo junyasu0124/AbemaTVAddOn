@@ -166,7 +166,7 @@ label {
   }
 }
 
-#suggestReload {
+.suggestReload {
   margin: 4px 0 0 0;
 }
 
@@ -177,10 +177,12 @@ label {
 }
 
 #continuousCommentConditionListContainer {
-  margin-top: 8px;
+  margin-top: 4px;
 }
 
 #continuousCommentConditionList {
+  margin-top: 2px;
+
   .input {
     max-width: 22px;
   }
