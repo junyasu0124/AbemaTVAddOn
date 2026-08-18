@@ -116,6 +116,16 @@ window.addEventListener('inline-script-loaded', (event) => {
 initialize();
 
 function initialize() {
+  const savedSettings = sessionStorage.getItem('abm_player_settings');
+  if (savedSettings) {
+    try {
+      const settings = JSON.parse(savedSettings);
+      if (settings.playbackRate && !defaultRates.includes(settings.playbackRate)) {
+        sessionStorage.removeItem('abm_player_settings');
+      }
+    }
+    catch (error) { }
+  }
   const now = Date.now();
   if (now - initializedDate < 500)
     return;
@@ -160,11 +170,13 @@ function setRateButtonClickEvent() {
 
       function setOnClick(button) {
         button.onclick = (event) => {
-          event.stopPropagation();
           const rate = parseFloat(button.textContent);
           const video = document.querySelector('video');
-          if (video)
+          if (video) {
+            event.stopPropagation();
             video.playbackRate = rate;
+            sessionStorage.setItem('abm_player_settings', `{"isWideMode":true,"playbackRate":${defaultRates.includes(rate) ? rate : 1}}`);
+          }
         };
       }
     }
