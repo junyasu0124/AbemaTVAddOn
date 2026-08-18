@@ -1,3 +1,5 @@
+const defaultRates = [1.0, 1.3, 1.5, 1.7, 2.0];
+
 const script = document.createElement('script');
 script.src = chrome.runtime.getURL('inline.js');
 script.async = false;
@@ -77,7 +79,7 @@ chrome.storage.local.get('continuousComment', data => {
 });
 
 chrome.storage.local.get('playbackRates', data => {
-  document.documentElement.dataset.playbackRates = JSON.stringify(data.playbackRates || [1.0, 1.3, 1.5, 1.7, 2.0]);
+  document.documentElement.dataset.playbackRates = JSON.stringify(data.playbackRates || defaultRates);
 });
 
 let initializedDate = 0;
