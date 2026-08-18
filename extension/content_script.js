@@ -136,7 +136,7 @@ function saveSettingsInLocalStorage() {
 
 function setRateButtonClickEvent() {
   const id = setInterval(() => {
-    const playerContainer = document.querySelector('.c-tv-TimeshiftPlayerContainerView');
+    const playerContainer = document.querySelector('.c-vod-EpisodePlayerContainer-wrapper');
     const rateButtons = document.querySelectorAll('.com-vod-VODSettingsBlock__check-item');
     if (playerContainer !== null && rateButtons.length > 0) {
       clearInterval(id);
