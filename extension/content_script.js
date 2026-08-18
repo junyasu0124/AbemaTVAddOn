@@ -150,6 +150,16 @@ function setRateButtonClickEvent() {
     const rateButtons = document.querySelectorAll('.com-vod-VODSettingsBlock__check-item');
     if (playerContainer !== null && rateButtons.length > 0) {
       clearInterval(id);
+      document.head.firstChild.insertAdjacentHTML('afterend', `
+      <style id="continuous-comment-style">
+        .com-vod-VideoControlPlaybackRate .com-vod-VODSettingsBlock__check-item {
+          padding: 0;
+          &>.com-a-RadioButton {
+            margin: 5px 8px;
+          }
+        }
+      </style>
+      `);
       const video = document.querySelector('video');
       const icon = document.querySelector('.com-vod-VideoControlPlaybackRate__icon');
       const onReachTopObserver = new MutationObserver((mutationsList) => {
